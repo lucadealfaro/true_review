@@ -2,7 +2,6 @@
 
 from gluon import current
 
-site_admins=['marfaella@gmail.com', 'm.faella@unina.it', 'luca@soe.ucsc.edu', 'lucadealfaro@gmail.com', 'luca@dealfaro.com']
 
 def is_logged_in():
     return current.auth.user_id is not None
@@ -29,13 +28,13 @@ def is_topic_reviewer(topic_id):
         return False
     return reviewer.is_reviewer
 
-def is_site_admin(): 
+def is_site_admin():
     """Uses a static list of site admins."""
     user_id = current.auth.user_id
     if user_id is None:
         return False
     db = current.db
-    return db(db.auth_user.id == user_id).select().first().email in site_admins
+    return db(db.auth_user.id == user_id).select().first().email in current.site_admins
 
 
 ### The Policies ###
@@ -45,7 +44,7 @@ def can_create_topic():
 
 def can_edit_topic(topic_id):
     return is_topic_admin(topic_id) or is_site_admin()
-    
+
 def can_delete_topic(topic_id):
     return is_site_admin()
 

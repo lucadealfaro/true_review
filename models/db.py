@@ -84,6 +84,11 @@ else:
 
 # so that modules can use it
 current.db = db
+current.gdb = gdb
+
+## These are the site admins.
+site_admins = myconf.get('users.admins').split(',')
+current.site_admins = site_admins
 
 ## by default give a view/generic.extension to all actions from localhost
 ## none otherwise. a pattern can be 'controller/function.extension'

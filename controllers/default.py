@@ -51,7 +51,7 @@ def index():
         maxtextlength=48,
     )
     add_button = A(icon_add, 'Add topic', _class='btn btn-success',
-                    _href=URL('main', 'create_topic')) if access.can_create_topic() else None
+                    _href=URL('main', 'create_topic')) if access.can_create_topic() else ''
     return dict(grid=grid, add_button=add_button)
 
 
