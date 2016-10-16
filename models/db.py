@@ -87,7 +87,7 @@ current.db = db
 current.gdb = gdb
 
 ## These are the site admins.
-site_admins = myconf.get('users.admins').split(',')
+site_admins = myconf.get('users.admins')
 current.site_admins = site_admins
 
 ## by default give a view/generic.extension to all actions from localhost
@@ -133,7 +133,7 @@ auth.settings.extra_fields['auth_user']= [
     Field('display_name', 'string', required=True), # Name to use in displaying reviewer.
     Field('user_timezone', 'string', widget=my_tz_nice_detector_widget),
     Field('affiliation', 'string'),
-    Field('link', 'string', requires=IS_URL()),
+    Field('link', 'string', requires=IS_EMPTY_OR(IS_URL())),
     Field('blurb', 'text'),
 ]
 
@@ -146,8 +146,8 @@ auth.settings.table_user.last_name.readable = auth.settings.table_user.last_name
 auth.settings.table_user.user_timezone.label = T('Time zone')
 auth.settings.table_user.display_name.label = T('Display name')
 ## configure auth policy
-auth.settings.registration_requires_verification = False
-auth.settings.registration_requires_approval = False
+auth.settings.registration_requires_verification = myconf.take('registration.verification')
+auth.settings.registration_requires_approval = myconf.take('registration.approval')
 auth.settings.reset_password_requires_verification = True
 
 ## configure email
