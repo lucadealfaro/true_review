@@ -1,0 +1,82 @@
+.main_logo_true {
+  color: $clrLogoSimil;
+  font-weight: bold;
+}
+.main_logo_review {
+  color: $clrLogoCheck;
+  font-weight: bold;
+}
+.button_row_right {
+  float: right;
+  padding-bottom: 20px;
+}
+.main_content {
+  text-align: center;
+  display: block;
+  clear: both;
+  .splash_container {
+    text-align: center;
+    .main_splash {
+      color: $clrMainSplash;
+      font-size: 1.2em;
+      font-weight: bold;
+      display: inline-block;
+      width: 90%;
+      h3 {
+        font-size: 1.1em;
+        color: $clrMainSplash;
+        .fa {
+          margin-right: 0.5em;
+        }
+      }
+    }
+  }
+
+  #suggest_login {
+    margin-top: 30px;
+    display-style: inline-block;
+  }
+  #label_comparison_name {
+    color: $clrLabels;
+  }
+  .login_explanation {
+    margin-top: 10px;
+    color: $clrLoginHelp;
+  }
+
+  div.main_section {
+    margin-top: 4em;
+  }
+
+  div.main_icon_section {
+    margin-top: 5em;
+    color: $clrLightIcons;
+  }
+
+  div.container_buttons {
+    width: 90%;
+    button#save_later_button {
+      float: right;
+    }
+    button.btn-default {
+      color: $clrDarkIcons;
+    }
+  }
+  h1 {
+    font-size: 200%;
+  }
+}
+.footer {
+  background: none;
+}
+h2 {
+  color: $clrIcons;
+}
+.btn {
+  margin: 4px 2px;
+  text-shadow: none;
+  &.disabled {
+    cursor: not-allowed;
+    pointer-events: all !important; // Due to bug in bootstrap
+  }
+}

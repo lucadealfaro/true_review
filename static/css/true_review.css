@@ -1,0 +1,739 @@
+/* line 1, ../sass/_main.scss */
+.main_logo_true {
+  color: #4f80d2;
+  font-weight: bold;
+}
+
+/* line 5, ../sass/_main.scss */
+.main_logo_review {
+  color: #ef9746;
+  font-weight: bold;
+}
+
+/* line 9, ../sass/_main.scss */
+.button_row_right {
+  float: right;
+  padding-bottom: 20px;
+}
+
+/* line 13, ../sass/_main.scss */
+.main_content {
+  text-align: center;
+  display: block;
+  clear: both;
+}
+/* line 17, ../sass/_main.scss */
+.main_content .splash_container {
+  text-align: center;
+}
+/* line 19, ../sass/_main.scss */
+.main_content .splash_container .main_splash {
+  color: #aaa;
+  font-size: 1.2em;
+  font-weight: bold;
+  display: inline-block;
+  width: 90%;
+}
+/* line 25, ../sass/_main.scss */
+.main_content .splash_container .main_splash h3 {
+  font-size: 1.1em;
+  color: #aaa;
+}
+/* line 28, ../sass/_main.scss */
+.main_content .splash_container .main_splash h3 .fa {
+  margin-right: 0.5em;
+}
+/* line 35, ../sass/_main.scss */
+.main_content #suggest_login {
+  margin-top: 30px;
+  display-style: inline-block;
+}
+/* line 39, ../sass/_main.scss */
+.main_content #label_comparison_name {
+  color: #666;
+}
+/* line 42, ../sass/_main.scss */
+.main_content .login_explanation {
+  margin-top: 10px;
+  color: #aaa;
+}
+/* line 47, ../sass/_main.scss */
+.main_content div.main_section {
+  margin-top: 4em;
+}
+/* line 51, ../sass/_main.scss */
+.main_content div.main_icon_section {
+  margin-top: 5em;
+  color: #ddd;
+}
+/* line 56, ../sass/_main.scss */
+.main_content div.container_buttons {
+  width: 90%;
+}
+/* line 58, ../sass/_main.scss */
+.main_content div.container_buttons button#save_later_button {
+  float: right;
+}
+/* line 61, ../sass/_main.scss */
+.main_content div.container_buttons button.btn-default {
+  color: #777;
+}
+/* line 65, ../sass/_main.scss */
+.main_content h1 {
+  font-size: 200%;
+}
+
+/* line 69, ../sass/_main.scss */
+.footer {
+  background: none;
+}
+
+/* line 72, ../sass/_main.scss */
+h2 {
+  color: #999;
+}
+
+/* line 75, ../sass/_main.scss */
+.btn {
+  margin: 4px 2px;
+  text-shadow: none;
+}
+/* line 78, ../sass/_main.scss */
+.btn.disabled {
+  cursor: not-allowed;
+  pointer-events: all !important;
+}
+
+/* line 1, ../sass/_navbar.scss */
+.navbar-inverse {
+  background-color: #dddddd;
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2Y3ZjdmNyIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #f7f7f7), color-stop(100%, #dddddd));
+  background-image: -moz-linear-gradient(#f7f7f7, #dddddd);
+  background-image: -webkit-linear-gradient(#f7f7f7, #dddddd);
+  background-image: linear-gradient(#f7f7f7, #dddddd);
+  border-color: #bbb;
+}
+/* line 5, ../sass/_navbar.scss */
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-inverse .navbar-nav > .open > a:focus, .navbar-inverse .navbar-inverse .navbar-nav > .open > a:hover {
+  background-color: #dddddd;
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2Y3ZjdmNyIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #f7f7f7), color-stop(100%, #dddddd));
+  background-image: -moz-linear-gradient(#f7f7f7, #dddddd);
+  background-image: -webkit-linear-gradient(#f7f7f7, #dddddd);
+  background-image: linear-gradient(#f7f7f7, #dddddd);
+}
+/* line 9, ../sass/_navbar.scss */
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > li > a {
+  color: #999;
+}
+/* line 11, ../sass/_navbar.scss */
+.navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus, .navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
+  color: #777;
+}
+
+/* line 16, ../sass/_navbar.scss */
+.navbar-brand {
+  font-size: 2em;
+}
+
+/* line 20, ../sass/_navbar.scss */
+.navbar .nav {
+  font-size: 1.0em;
+}
+
+/*
+ * The MIT License
+ * Copyright (c) 2012 Matias Meno <m@tias.me>
+ */
+@-webkit-keyframes passing-through {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(40px);
+    -moz-transform: translateY(40px);
+    -ms-transform: translateY(40px);
+    -o-transform: translateY(40px);
+    transform: translateY(40px);
+  }
+  30%, 70% {
+    opacity: 1;
+    -webkit-transform: translateY(0px);
+    -moz-transform: translateY(0px);
+    -ms-transform: translateY(0px);
+    -o-transform: translateY(0px);
+    transform: translateY(0px);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translateY(-40px);
+    -moz-transform: translateY(-40px);
+    -ms-transform: translateY(-40px);
+    -o-transform: translateY(-40px);
+    transform: translateY(-40px);
+  }
+}
+@-moz-keyframes passing-through {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(40px);
+    -moz-transform: translateY(40px);
+    -ms-transform: translateY(40px);
+    -o-transform: translateY(40px);
+    transform: translateY(40px);
+  }
+  30%, 70% {
+    opacity: 1;
+    -webkit-transform: translateY(0px);
+    -moz-transform: translateY(0px);
+    -ms-transform: translateY(0px);
+    -o-transform: translateY(0px);
+    transform: translateY(0px);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translateY(-40px);
+    -moz-transform: translateY(-40px);
+    -ms-transform: translateY(-40px);
+    -o-transform: translateY(-40px);
+    transform: translateY(-40px);
+  }
+}
+@keyframes passing-through {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(40px);
+    -moz-transform: translateY(40px);
+    -ms-transform: translateY(40px);
+    -o-transform: translateY(40px);
+    transform: translateY(40px);
+  }
+  30%, 70% {
+    opacity: 1;
+    -webkit-transform: translateY(0px);
+    -moz-transform: translateY(0px);
+    -ms-transform: translateY(0px);
+    -o-transform: translateY(0px);
+    transform: translateY(0px);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translateY(-40px);
+    -moz-transform: translateY(-40px);
+    -ms-transform: translateY(-40px);
+    -o-transform: translateY(-40px);
+    transform: translateY(-40px);
+  }
+}
+@-webkit-keyframes slide-in {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(40px);
+    -moz-transform: translateY(40px);
+    -ms-transform: translateY(40px);
+    -o-transform: translateY(40px);
+    transform: translateY(40px);
+  }
+  30% {
+    opacity: 1;
+    -webkit-transform: translateY(0px);
+    -moz-transform: translateY(0px);
+    -ms-transform: translateY(0px);
+    -o-transform: translateY(0px);
+    transform: translateY(0px);
+  }
+}
+@-moz-keyframes slide-in {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(40px);
+    -moz-transform: translateY(40px);
+    -ms-transform: translateY(40px);
+    -o-transform: translateY(40px);
+    transform: translateY(40px);
+  }
+  30% {
+    opacity: 1;
+    -webkit-transform: translateY(0px);
+    -moz-transform: translateY(0px);
+    -ms-transform: translateY(0px);
+    -o-transform: translateY(0px);
+    transform: translateY(0px);
+  }
+}
+@keyframes slide-in {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(40px);
+    -moz-transform: translateY(40px);
+    -ms-transform: translateY(40px);
+    -o-transform: translateY(40px);
+    transform: translateY(40px);
+  }
+  30% {
+    opacity: 1;
+    -webkit-transform: translateY(0px);
+    -moz-transform: translateY(0px);
+    -ms-transform: translateY(0px);
+    -o-transform: translateY(0px);
+    transform: translateY(0px);
+  }
+}
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    transform: scale(1);
+  }
+  10% {
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    -o-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+  20% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    transform: scale(1);
+  }
+}
+@-moz-keyframes pulse {
+  0% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    transform: scale(1);
+  }
+  10% {
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    -o-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+  20% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    transform: scale(1);
+  }
+}
+@keyframes pulse {
+  0% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    transform: scale(1);
+  }
+  10% {
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    -o-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+  20% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    transform: scale(1);
+  }
+}
+/* line 81, ../sass/_dropzone.scss */
+.dropzone, .dropzone * {
+  box-sizing: border-box;
+}
+
+/* line 84, ../sass/_dropzone.scss */
+.dropzone {
+  min-height: 150px;
+  border: 2px solid rgba(0, 0, 0, 0.3);
+  background: white;
+  padding: 20px 20px;
+}
+/* line 90, ../sass/_dropzone.scss */
+.dropzone.dz-clickable {
+  cursor: pointer;
+}
+/* line 93, ../sass/_dropzone.scss */
+.dropzone.dz-clickable * {
+  cursor: default;
+}
+/* line 97, ../sass/_dropzone.scss */
+.dropzone.dz-clickable .dz-message, .dropzone.dz-clickable .dz-message * {
+  cursor: pointer;
+}
+/* line 109, ../sass/_dropzone.scss */
+.dropzone.dz-started .dz-message {
+  display: none;
+}
+/* line 114, ../sass/_dropzone.scss */
+.dropzone.dz-drag-hover {
+  border-style: solid;
+}
+/* line 116, ../sass/_dropzone.scss */
+.dropzone.dz-drag-hover .dz-message {
+  opacity: 0.5;
+}
+/* line 120, ../sass/_dropzone.scss */
+.dropzone .dz-message {
+  text-align: center;
+  margin: 1.5em 0;
+}
+/* line 125, ../sass/_dropzone.scss */
+.dropzone .dz-preview {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  margin: 16px;
+  min-height: 100px;
+}
+/* line 134, ../sass/_dropzone.scss */
+.dropzone .dz-preview:hover {
+  z-index: 1000;
+}
+/* line 137, ../sass/_dropzone.scss */
+.dropzone .dz-preview:hover .dz-details {
+  opacity: 1;
+}
+/* line 144, ../sass/_dropzone.scss */
+.dropzone .dz-preview.dz-file-preview .dz-image {
+  border-radius: 20px;
+  background: #999;
+  border: 1px solid #9bbdff;
+  background: linear-gradient(to bottom, #d3e2ff, #b4ceff);
+}
+/* line 151, ../sass/_dropzone.scss */
+.dropzone .dz-preview.dz-file-preview .dz-details {
+  opacity: 1;
+}
+/* line 156, ../sass/_dropzone.scss */
+.dropzone .dz-preview.dz-image-preview {
+  background: white;
+}
+/* line 158, ../sass/_dropzone.scss */
+.dropzone .dz-preview.dz-image-preview .dz-details {
+  -webkit-transition: opacity 0.2s linear;
+  -moz-transition: opacity 0.2s linear;
+  -ms-transition: opacity 0.2s linear;
+  -o-transition: opacity 0.2s linear;
+  transition: opacity 0.2s linear;
+}
+/* line 163, ../sass/_dropzone.scss */
+.dropzone .dz-preview .dz-remove {
+  font-size: 14px;
+  text-align: center;
+  display: block;
+  cursor: pointer;
+  border: none;
+}
+/* line 169, ../sass/_dropzone.scss */
+.dropzone .dz-preview .dz-remove:hover {
+  text-decoration: underline;
+}
+/* line 174, ../sass/_dropzone.scss */
+.dropzone .dz-preview:hover .dz-details {
+  opacity: 1;
+}
+/* line 177, ../sass/_dropzone.scss */
+.dropzone .dz-preview .dz-details {
+  z-index: 20;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  font-size: 13px;
+  min-width: 100%;
+  max-width: 100%;
+  padding: 1em 1em;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.9);
+  line-height: 150%;
+}
+/* line 199, ../sass/_dropzone.scss */
+.dropzone .dz-preview .dz-details .dz-size {
+  margin-bottom: 0.2em;
+}
+/* line 204, ../sass/_dropzone.scss */
+.dropzone .dz-preview .dz-details .dz-filename {
+  white-space: nowrap;
+}
+/* line 209, ../sass/_dropzone.scss */
+.dropzone .dz-preview .dz-details .dz-filename:hover span {
+  border: 1px solid rgba(200, 200, 200, 0.8);
+  background-color: rgba(255, 255, 255, 0.8);
+}
+/* line 214, ../sass/_dropzone.scss */
+.dropzone .dz-preview .dz-details .dz-filename:not(:hover) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* line 215, ../sass/_dropzone.scss */
+.dropzone .dz-preview .dz-details .dz-filename:not(:hover) span {
+  border: 1px solid transparent;
+}
+/* line 225, ../sass/_dropzone.scss */
+.dropzone .dz-preview .dz-details .dz-filename span, .dropzone .dz-preview .dz-details .dz-size span {
+  background-color: rgba(255, 255, 255, 0.4);
+  padding: 0 0.4em;
+  border-radius: 3px;
+}
+/* line 237, ../sass/_dropzone.scss */
+.dropzone .dz-preview:hover .dz-image img {
+  -webkit-transform: scale(1.05, 1.05);
+  -moz-transform: scale(1.05, 1.05);
+  -ms-transform: scale(1.05, 1.05);
+  -o-transform: scale(1.05, 1.05);
+  transform: scale(1.05, 1.05);
+  -webkit-filter: blur(8px);
+  filter: blur(8px);
+}
+/* line 243, ../sass/_dropzone.scss */
+.dropzone .dz-preview .dz-image {
+  border-radius: 20px;
+  overflow: hidden;
+  width: 200px;
+  height: 80px;
+  position: relative;
+  display: block;
+  z-index: 10;
+}
+/* line 252, ../sass/_dropzone.scss */
+.dropzone .dz-preview .dz-image img {
+  display: block;
+}
+/* line 259, ../sass/_dropzone.scss */
+.dropzone .dz-preview.dz-success .dz-success-mark {
+  -webkit-animation: passing-through 3s cubic-bezier(0.77, 0, 0.175, 1);
+  -moz-animation: passing-through 3s cubic-bezier(0.77, 0, 0.175, 1);
+  -ms-animation: passing-through 3s cubic-bezier(0.77, 0, 0.175, 1);
+  -o-animation: passing-through 3s cubic-bezier(0.77, 0, 0.175, 1);
+  animation: passing-through 3s cubic-bezier(0.77, 0, 0.175, 1);
+}
+/* line 264, ../sass/_dropzone.scss */
+.dropzone .dz-preview.dz-error .dz-error-mark {
+  opacity: 1;
+  -webkit-animation: slide-in 3s cubic-bezier(0.77, 0, 0.175, 1);
+  -moz-animation: slide-in 3s cubic-bezier(0.77, 0, 0.175, 1);
+  -ms-animation: slide-in 3s cubic-bezier(0.77, 0, 0.175, 1);
+  -o-animation: slide-in 3s cubic-bezier(0.77, 0, 0.175, 1);
+  animation: slide-in 3s cubic-bezier(0.77, 0, 0.175, 1);
+}
+/* line 271, ../sass/_dropzone.scss */
+.dropzone .dz-preview .dz-success-mark, .dropzone .dz-preview .dz-error-mark {
+  pointer-events: none;
+  opacity: 0;
+  z-index: 500;
+  position: absolute;
+  display: block;
+  top: 50%;
+  left: 50%;
+  margin-left: -27px;
+  margin-top: -27px;
+}
+/* line 288, ../sass/_dropzone.scss */
+.dropzone .dz-preview .dz-success-mark svg, .dropzone .dz-preview .dz-error-mark svg {
+  display: block;
+  width: 54px;
+  height: 54px;
+}
+/* line 296, ../sass/_dropzone.scss */
+.dropzone .dz-preview.dz-processing .dz-progress {
+  opacity: 1;
+  -webkit-transition: all 0.2s linear;
+  -moz-transition: all 0.2s linear;
+  -ms-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+  transition: all 0.2s linear;
+}
+/* line 300, ../sass/_dropzone.scss */
+.dropzone .dz-preview.dz-complete .dz-progress {
+  opacity: 0;
+  -webkit-transition: opacity 0.4s ease-in;
+  -moz-transition: opacity 0.4s ease-in;
+  -ms-transition: opacity 0.4s ease-in;
+  -o-transition: opacity 0.4s ease-in;
+  transition: opacity 0.4s ease-in;
+}
+/* line 306, ../sass/_dropzone.scss */
+.dropzone .dz-preview:not(.dz-processing) .dz-progress {
+  -webkit-animation: pulse 6s ease infinite;
+  -moz-animation: pulse 6s ease infinite;
+  -ms-animation: pulse 6s ease infinite;
+  -o-animation: pulse 6s ease infinite;
+  animation: pulse 6s ease infinite;
+}
+/* line 310, ../sass/_dropzone.scss */
+.dropzone .dz-preview .dz-progress {
+  opacity: 1;
+  z-index: 1000;
+  pointer-events: none;
+  position: absolute;
+  height: 16px;
+  left: 50%;
+  top: 58%;
+  margin-top: 0px;
+  width: 120px;
+  margin-left: -60px;
+  background: rgba(255, 255, 255, 0.9);
+  -webkit-transform: scale(1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+/* line 335, ../sass/_dropzone.scss */
+.dropzone .dz-preview .dz-progress .dz-upload {
+  background: #333;
+  background: linear-gradient(to bottom, #666666, #444444);
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  -webkit-transition: width 300ms ease-in-out;
+  -moz-transition: width 300ms ease-in-out;
+  -ms-transition: width 300ms ease-in-out;
+  -o-transition: width 300ms ease-in-out;
+  transition: width 300ms ease-in-out;
+}
+/* line 349, ../sass/_dropzone.scss */
+.dropzone .dz-preview.dz-error .dz-error-message {
+  display: block;
+}
+/* line 352, ../sass/_dropzone.scss */
+.dropzone .dz-preview.dz-error:hover .dz-error-message {
+  opacity: 1;
+  pointer-events: auto;
+}
+/* line 358, ../sass/_dropzone.scss */
+.dropzone .dz-preview .dz-error-message {
+  pointer-events: none;
+  z-index: 1000;
+  position: absolute;
+  display: block;
+  display: none;
+  opacity: 0;
+  -webkit-transition: opacity 0.3s ease;
+  -moz-transition: opacity 0.3s ease;
+  -ms-transition: opacity 0.3s ease;
+  -o-transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease;
+  border-radius: 8px;
+  font-size: 13px;
+  top: 64px;
+  left: -10px;
+  width: 74px;
+  background: #be2626;
+  background: linear-gradient(to bottom, #be2626, #a92222);
+  padding: 0.5em 1.2em;
+  color: white;
+}
+/* line 380, ../sass/_dropzone.scss */
+.dropzone .dz-preview .dz-error-message:after {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 31px;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid #be2626;
+}
+/* line 394, ../sass/_dropzone.scss */
+.dropzone .dz-size strong {
+  font-weight: normal;
+}
+
+/* line 400, ../sass/_dropzone.scss */
+.dropzone {
+  border: 2px dashed #4f80d2;
+  border-radius: 5px;
+  background: white;
+  width: 90%;
+  margin: 10px auto 20px auto;
+}
+/* line 406, ../sass/_dropzone.scss */
+.dropzone .dz-message {
+  font-weight: 400;
+  font-size: 1.4em;
+  color: #aaa;
+}
+/* line 410, ../sass/_dropzone.scss */
+.dropzone .dz-message .note {
+  font-size: 0.8em;
+  font-weight: 200;
+  display: inline-block;
+  width: 80%;
+  margin-top: 1.4rem;
+}
+/* line 416, ../sass/_dropzone.scss */
+.dropzone .dz-message .note .feature_list {
+  margin-top: 10px;
+  font-weight: normal;
+  text-align: left;
+  background: none;
+  border: none;
+  font-size: 0.9em;
+}
+/* line 423, ../sass/_dropzone.scss */
+.dropzone .dz-message .note .feature_list .feature {
+  width: 80%;
+  float: left;
+}
+/* line 426, ../sass/_dropzone.scss */
+.dropzone .dz-message .note .feature_list .feature .feature_text {
+  float: left;
+  color: #aaa;
+}
+/* line 434, ../sass/_dropzone.scss */
+.dropzone .fa {
+  color: #999;
+}
+
+/* line 2, ../sass/_tables.scss */
+div#result_table table {
+  width: 90%;
+  margin: 1em auto 1em auto;
+}
+/* line 5, ../sass/_tables.scss */
+div#result_table table tr {
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+/* line 8, ../sass/_tables.scss */
+div#result_table table tr:first-child {
+  border-top: 1px solid #ddd;
+}
+/* line 12, ../sass/_tables.scss */
+div#result_table table td {
+  padding: 4px 0.5em 4px 0.5em;
+}
+
+/* line 18, ../sass/_tables.scss */
+div.table_footer {
+  display: block;
+  width: 90%;
+  margin: auto;
+  text-align: right;
+  color: #666;
+}
+/* line 24, ../sass/_tables.scss */
+div.table_footer span.pagine {
+  color: #777;
+  cursor: pointer;
+}
+/* line 27, ../sass/_tables.scss */
+div.table_footer span.pagine.disabled i.fa {
+  color: #ddd;
+  cursor: not-allowed;
+}

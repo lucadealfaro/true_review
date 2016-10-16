@@ -1,0 +1,35 @@
+<span>
+  {{for b in button_list:}}
+    {{=b}}
+  {{pass}}
+</span>
+<div class="our_form paper_display">
+  <div class="paper_title row">
+    <div class="form_label">Title:</div>
+    <div class="content">{{=paper.title}}</div>
+  </div>
+  <div class="paper_authors row">
+    <div class="form_label">Authors:</div>
+    <div class="content">{{=", ".join(paper.authors)}}</div>
+  </div>
+  <div class="paper_topics row">
+    <div class="form_label">Topics:</div>
+    <div class="content">{{=topics}}</div>
+  </div>
+  <div class="paper_score row">
+    <div class="form_label">Score:</div>
+    <div class="content">{{=score}}</div>
+  </div>
+  <div class="paper_num_reviews row">
+    <div class="form_label">Number of reviews:</div>
+    <div class="content">{{=num_reviews}}</div>
+  </div>
+  <div class="paper_first_posted row">
+    <div class="form_label">First version date:</div>
+    <div class="content">{{=first_version_date}}</div>
+  </div>
+  <div class="paper_last_modified row">
+    <div class="form_label">Date of most recent version:</div>
+    <div class="content">{{=latest_version_date}}</div>
+  </div>
+</div>

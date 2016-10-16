@@ -1,0 +1,13 @@
+{{left_sidebar_enabled,right_sidebar_enabled=False,False}}
+{{extend 'layout.html'}}
+
+{{block header}}
+{{end}}
+
+{{if is_create:}}
+  <h1>Add Paper</h1>
+{{else:}}
+  <h1>Edit Paper</h1>
+{{pass}}
+
+{{=form}}

@@ -1,0 +1,32 @@
+div#result_table {
+  table {
+    width: 90%;
+    margin: 1em auto 1em auto;
+    tr {
+      border-bottom: 1px solid $clrTableLines;
+      text-align: left;
+      &:first-child {
+        border-top: 1px solid $clrTableLines;
+      }
+    }
+    td {
+      padding: 4px 0.5em 4px 0.5em;
+    }
+  }
+}
+
+div.table_footer {
+  display: block;
+  width: 90%;
+  margin: auto;
+  text-align: right;
+  color: $clrLabels;
+  span.pagine {
+    color: $clrDarkIcons;
+    cursor: pointer;
+    &.disabled i.fa {
+      color: $clrLightIcons;
+      cursor: not-allowed;
+    }
+  }
+}

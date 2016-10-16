@@ -1,0 +1,12 @@
+{{left_sidebar_enabled,right_sidebar_enabled=False,False}}
+{{extend 'layout.html'}}
+
+{{block header}}
+{{end}}
+<h1>{{=topic.name}}</h1>
+
+<h2>Papers</h2>
+{{=LOAD('components', 'paper_topic_index', args=[topic.id], ajax=True)}}
+
+<h2>Reviewers</h2>
+{{=LOAD('components', 'reviewers_topic_grid', args=[topic.id], ajax=True)}}

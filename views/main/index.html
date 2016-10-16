@@ -1,0 +1,28 @@
+{{left_sidebar_enabled,right_sidebar_enabled=False,False}}
+{{extend 'layout.html'}}
+
+{{block header}}
+{{end}}
+
+<div class="main_content">
+  <div class="splash_container">
+    <div class="main_splash" id="features">
+      <h3 id="feature_title">True Review
+      </h3>
+    </div>
+  </div>
+
+  {{ if auth.user_id is None: }}
+    <div id="suggest_login">
+      <div class="button_row">
+        <a class="btn btn-success" href="{{=URL('default', 'user', args=['register'])}}">Sign Up</a>
+        <a class="btn btn-success" href="{{=URL('default', 'user', args=['login'])}}">Log In</a>
+      </div>
+      <div class="login_explanation">Sign Up or Log In to participate in the review process.</div>
+    </div>
+  {{pass}}
+</div>
+
+<h1>Topic List</h1>
+{{=add_button}}
+{{=grid}}
