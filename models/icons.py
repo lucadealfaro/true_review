@@ -10,3 +10,4 @@ icon_view = I(_class='fa fa-eye')
 icon_details = I(_class='fa fa-info')
 icon_your_review = icon_view
 icon_delete = I(_class='fa fa-trash-o')
+icon_hide = I(_class='fa fa-eye-slash')

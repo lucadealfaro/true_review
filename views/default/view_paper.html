@@ -1,0 +1,10 @@
+{{left_sidebar_enabled,right_sidebar_enabled=False,False}}
+{{extend 'layout.html'}}
+
+{{block header}}
+{{end}}
+
+<h2>Paper</h2>
+{{=LOAD('components', 'paper_info', args=[paper_id])}}
+
+{{=LOAD('components', 'paper_reviews', args=[paper_id, topic_id])}}

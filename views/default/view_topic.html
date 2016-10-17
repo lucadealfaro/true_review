@@ -1,0 +1,19 @@
+{{left_sidebar_enabled,right_sidebar_enabled=False,False}}
+{{extend 'layout.html'}}
+
+{{block header}}
+{{end}}
+<div class="main_content">
+    <div class="topic_name">
+        Topic: {{=topic.name}}
+    </div>
+    <div class="button_bar">
+        {{for b in button_list:}}
+            {{=b}}
+        {{pass}}
+    </div>
+    <div class="topic_description">
+        {{=description}}
+    </div>
+</div>
+

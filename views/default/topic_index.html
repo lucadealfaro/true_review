@@ -1,0 +1,30 @@
+{{extend 'layout.html'}}
+
+{{block header}}
+
+{{end}}
+
+<h1>{{=topic.name}}</h1>
+
+<h2>Papers</h2>
+
+<div id="papers-div">
+
+    <table>
+        <thead>
+        <tr>
+            <th>Paper</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+
+</div>
+
+<h2>Reviewers</h2>
+
+<div id="reviewers-div"></div>
+
+<script src="{{=URL('static', 'topic_index.js')}}"></script>
