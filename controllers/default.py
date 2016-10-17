@@ -32,14 +32,19 @@ def index():
     # Displays list of topics.
     q = (db.topic.is_active == True)
     links=[]
+    db.topic.name.label = T('Topic')
     links.append(dict(header='',
                       body=lambda r:
-                          A('Edit', _href=URL('default', 'edit_topic', args=[r.id]))
+                          A(icon_view, 'Details', _href=URL('default', 'view_topic', args=[r.id]))
+                      ))
+    links.append(dict(header='',
+                      body=lambda r:
+                          A(icon_edit, 'Edit', _href=URL('default', 'edit_topic', args=[r.id]))
                              if access.can_edit_topic(r.id) else None
                       ))
     links.append(dict(header='',
                       body=lambda r:
-                           A('Delete', _href=URL('default', 'delete_topic', args=[r.id]))
+                           A(icon_delete, 'Delete', _href=URL('default', 'delete_topic', args=[r.id]))
                              if access.can_delete_topic(r.id) else None
                       ))
     grid = SQLFORM.grid(q,
@@ -53,6 +58,42 @@ def index():
     add_button = A(icon_add, 'Add topic', _class='btn btn-success',
                     _href=URL('default', 'create_topic')) if access.can_create_topic() else ''
     return dict(grid=grid, add_button=add_button)
+
+
+def topic_index():
+    topic_id = request.args(0)
+    topic = db.topic(topic_id)
+    if topic is None:
+        session.flash = T('No such topic')
+        redirect(URL('default', 'index'))
+
+    return dict(
+        topic_name = topic.name,
+
+    )
+
+
+def view_topic():
+    """Views the details of a topic."""
+    topic_id = request.args(0)
+    topic = db.topic(topic_id)
+    if topic is None:
+        session.flash = T('No such topic')
+        redirect(URL('default', 'index'))
+    button_list = []
+    if access.can_edit_topic(topic_id):
+        button_list.append(
+            A(icon_edit, 'Edit', _class='btn btn-primary',
+              _href=URL('default', 'edit_topic', args=[topic_id])))
+    if access.can_edit_topic(topic_id):
+        button_list.append(
+            A(icon_delete, 'Delete', _class='btn btn-danger',
+              _href=URL('default', 'delete_topic', args=[topic_id])))
+    return dict(topic=topic,
+                description=text_store_read(topic.description),
+                button_list=button_list,
+                )
+
 
 
 @auth.requires_login()
@@ -83,6 +124,28 @@ def delete_topic():
                 description=text_store_read(topic.description),
                 form=form,
                 is_empty=is_empty)
+
+
+@auth.requires_login()
+def edit_topic():
+    """Allows editing of a topic.  The parameter is the topic id."""
+    topic_id = request.args(0)
+    if not access.can_edit_topic(topic_id):
+        session.flash = T('You do not have the permission to edit this topic')
+        redirect(URL('main', 'index'))
+    topic = db.topic(topic_id)
+    form = SQLFORM(db.topic, record=topic)
+    # The "or <emptystring>" part fixes a bug that showed the datastore key in the form
+    # when the description itself is empty.
+    form.vars.description = text_store_read(topic.description) or ""
+    if form.validate():
+        topic.update_record(
+            name=form.vars.name,
+        )
+        text_store_write(form.vars.description, key=topic.description)
+        session.flash = T('The topic has been updated')
+        redirect(URL('default', 'index'))
+    return dict(form=form)
 
 
 @auth.requires_login()

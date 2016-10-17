@@ -18,15 +18,14 @@
 
 /* line 13, ../sass/_main.scss */
 .main_content {
-  text-align: center;
   display: block;
   clear: both;
 }
-/* line 17, ../sass/_main.scss */
+/* line 16, ../sass/_main.scss */
 .main_content .splash_container {
   text-align: center;
 }
-/* line 19, ../sass/_main.scss */
+/* line 18, ../sass/_main.scss */
 .main_content .splash_container .main_splash {
   color: #aaa;
   font-size: 1.2em;
@@ -34,71 +33,75 @@
   display: inline-block;
   width: 90%;
 }
-/* line 25, ../sass/_main.scss */
+/* line 24, ../sass/_main.scss */
 .main_content .splash_container .main_splash h3 {
   font-size: 1.1em;
   color: #aaa;
 }
-/* line 28, ../sass/_main.scss */
+/* line 27, ../sass/_main.scss */
 .main_content .splash_container .main_splash h3 .fa {
   margin-right: 0.5em;
 }
-/* line 35, ../sass/_main.scss */
+/* line 34, ../sass/_main.scss */
+.main_content i.fa {
+  padding-right: 5px;
+}
+/* line 38, ../sass/_main.scss */
 .main_content #suggest_login {
   margin-top: 30px;
   display-style: inline-block;
 }
-/* line 39, ../sass/_main.scss */
+/* line 42, ../sass/_main.scss */
 .main_content #label_comparison_name {
   color: #666;
 }
-/* line 42, ../sass/_main.scss */
+/* line 45, ../sass/_main.scss */
 .main_content .login_explanation {
   margin-top: 10px;
   color: #aaa;
 }
-/* line 47, ../sass/_main.scss */
+/* line 50, ../sass/_main.scss */
 .main_content div.main_section {
   margin-top: 4em;
 }
-/* line 51, ../sass/_main.scss */
+/* line 54, ../sass/_main.scss */
 .main_content div.main_icon_section {
   margin-top: 5em;
   color: #ddd;
 }
-/* line 56, ../sass/_main.scss */
+/* line 59, ../sass/_main.scss */
 .main_content div.container_buttons {
   width: 90%;
 }
-/* line 58, ../sass/_main.scss */
+/* line 61, ../sass/_main.scss */
 .main_content div.container_buttons button#save_later_button {
   float: right;
 }
-/* line 61, ../sass/_main.scss */
+/* line 64, ../sass/_main.scss */
 .main_content div.container_buttons button.btn-default {
   color: #777;
 }
-/* line 65, ../sass/_main.scss */
+/* line 68, ../sass/_main.scss */
 .main_content h1 {
   font-size: 200%;
 }
 
-/* line 69, ../sass/_main.scss */
+/* line 72, ../sass/_main.scss */
 .footer {
   background: none;
 }
 
-/* line 72, ../sass/_main.scss */
+/* line 75, ../sass/_main.scss */
 h2 {
   color: #999;
 }
 
-/* line 75, ../sass/_main.scss */
+/* line 78, ../sass/_main.scss */
 .btn {
   margin: 4px 2px;
   text-shadow: none;
 }
-/* line 78, ../sass/_main.scss */
+/* line 81, ../sass/_main.scss */
 .btn.disabled {
   cursor: not-allowed;
   pointer-events: all !important;
