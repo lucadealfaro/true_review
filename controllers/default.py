@@ -30,16 +30,16 @@ def index():
     # Displays list of topics.
     """ Serves the main page."""
     # Displays list of topics.
-    q = db.topic
+    q = (db.topic.is_active == True)
     links=[]
     links.append(dict(header='',
                       body=lambda r:
-                          A('Edit', _href=URL('main', 'edit_topic', args=[r.id]))
+                          A('Edit', _href=URL('default', 'edit_topic', args=[r.id]))
                              if access.can_edit_topic(r.id) else None
                       ))
     links.append(dict(header='',
                       body=lambda r:
-                           A('Delete', _href=URL('main', 'delete_topic', args=[r.id]))
+                           A('Delete', _href=URL('default', 'delete_topic', args=[r.id]))
                              if access.can_delete_topic(r.id) else None
                       ))
     grid = SQLFORM.grid(q,
@@ -51,10 +51,53 @@ def index():
         maxtextlength=48,
     )
     add_button = A(icon_add, 'Add topic', _class='btn btn-success',
-                    _href=URL('main', 'create_topic')) if access.can_create_topic() else ''
+                    _href=URL('default', 'create_topic')) if access.can_create_topic() else ''
     return dict(grid=grid, add_button=add_button)
 
 
+@auth.requires_login()
+def delete_topic():
+    """Deletion of a topic.  This simply makes a topic not active for the main list
+    of topics, but it does not otherwise affect the system."""
+    topic_id = request.args(0)
+    if not access.can_delete_topic(topic_id):
+        session.flash = T('You do not have the permission to delete a topic')
+        redirect(URL('default', 'index'))
+    # TODO: improve code below.  This should be done in the index via a modal form.
+    topic = db.topic(topic_id)
+    if topic is None:
+        session.flash = T('No such topic')
+        redirect(URL('default', 'index'))
+    is_empty = is_topic_empty(topic_id)
+    form = FORM.confirm('Delete?' if is_empty else 'Hide?',
+                        {'Cancel': URL('default', 'index')})
+    if form.accepted:
+        if is_empty:
+            db(db.topic.id == topic_id).delete()
+            session.flash = T('The topic has been deleted')
+        else:
+            topic.update_record(is_active=False)
+            session.flash = T('The topic has been hidden')
+        redirect(URL('default', 'index'))
+    return dict(topic=topic,
+                description=text_store_read(topic.description),
+                form=form,
+                is_empty=is_empty)
+
+
+@auth.requires_login()
+def create_topic():
+    if not access.can_create_topic():
+        session.flash = T('You do not have the permission to create a topic')
+        redirect(URL('default', 'index'))
+    form = SQLFORM(db.topic)
+    if form.validate():
+        topic_id = db.topic.insert(name=form.vars.name,
+                                   description=text_store_write(form.vars.description))
+        add_admin_to_topic(auth.user.email, topic_id)
+        session.flash = T('The topic has been created')
+        redirect(URL('default', 'index'))
+    return dict(form=form)
 
 
 

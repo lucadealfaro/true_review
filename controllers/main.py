@@ -57,31 +57,6 @@ def index():
     return dict(grid=grid, add_button=add_button)
 
 
-@auth.requires_login()
-def delete_topic():
-    """Deletion of a topic.  We would need to unlink from the topic all the papers that are in it.
-    Deletion should be possible only if there are no reviews. Otherwise we need to figure out
-    what to do; perhaps simply hide the topic from the main listing."""
-    topic_id = request.args(0)
-    if not access.can_delete_topic(topic_id):
-        session.flash = T('You do not have the permission to create a topic')
-        redirect(URL('main', 'index'))
-    # TODO
-    return dict()
-
-
-@auth.requires_login()
-def create_topic():
-    if not access.can_create_topic():
-        session.flash = T('You do not have the permission to create a topic')
-        redirect(URL('main', 'index'))
-    form = SQLFORM(db.topic)
-    if form.validate():
-        db.topic.insert(name=form.vars.name,
-                        description=text_store_write(form.vars.description))
-        session.flash = T('The topic has been created')
-        redirect(URL('main', 'index'))
-    return dict(form=form)
 
 
 @auth.requires_login()

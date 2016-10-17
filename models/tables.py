@@ -35,6 +35,7 @@ db.define_table('topic',
                 Field('creation_date', 'datetime', default=datetime.utcnow()),
                 Field('description', 'text'), # Pointer to text table.
                 Field('created_by', default=get_email(auth.user)),
+                Field('is_active', 'boolean', default=True), # Used to hide.
                 format = '%(name)s'
                 )
 represent_paper_topic = lambda v, r: A(v, _href=URL('default', 'topic_index', args=[r.id]))
@@ -43,6 +44,7 @@ db.topic.id.readable = db.topic.id.writable = False
 db.topic.creation_date.readable = db.topic.creation_date.writable = False
 db.topic.description.represent = represent_text_field
 db.topic.created_by.readable = db.topic.created_by.writable = None
+db.topic.is_active.readable = db.topic.is_active.writable = False
 
 
 # A paper, which may belong to several topics, and can also be updated in time by its authors.
