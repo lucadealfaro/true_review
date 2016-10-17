@@ -7,5 +7,6 @@ icon_empty = I(_class='fa fa-circle-o hidden')
 icon_edit = I(_class='fa fa-pencil-square-o')
 icon_reviews = I(_class='fa fa-balance-scale')
 icon_view = I(_class='fa fa-eye')
+icon_details = I(_class='fa fa-info')
 icon_your_review = icon_view
-icon_delete = I(_class='fa fa_trash')
+icon_delete = I(_class='fa fa-trash-o')

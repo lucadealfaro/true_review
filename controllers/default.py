@@ -3,7 +3,6 @@
 
 import json
 import review_utils
-import access
 
 def set_timezone():
     """Ajax call to set the timezone information for the session."""
@@ -35,17 +34,17 @@ def index():
     db.topic.name.label = T('Topic')
     links.append(dict(header='',
                       body=lambda r:
-                          A(icon_view, 'Details', _href=URL('default', 'view_topic', args=[r.id]))
+                          A(icon_details, 'Details', _href=URL('default', 'view_topic', args=[r.id]))
                       ))
     links.append(dict(header='',
                       body=lambda r:
                           A(icon_edit, 'Edit', _href=URL('default', 'edit_topic', args=[r.id]))
-                             if access.can_edit_topic(r.id) else None
+                             if can_edit_topic(r.id) else None
                       ))
     links.append(dict(header='',
                       body=lambda r:
                            A(icon_delete, 'Delete', _href=URL('default', 'delete_topic', args=[r.id]))
-                             if access.can_delete_topic(r.id) else None
+                             if can_delete_topic(r.id) else None
                       ))
     grid = SQLFORM.grid(q,
         csv=False, details=False,
@@ -56,7 +55,7 @@ def index():
         maxtextlength=48,
     )
     add_button = A(icon_add, 'Add topic', _class='btn btn-success',
-                    _href=URL('default', 'create_topic')) if access.can_create_topic() else ''
+                    _href=URL('default', 'create_topic')) if can_create_topic() else ''
     return dict(grid=grid, add_button=add_button)
 
 
@@ -81,11 +80,11 @@ def view_topic():
         session.flash = T('No such topic')
         redirect(URL('default', 'index'))
     button_list = []
-    if access.can_edit_topic(topic_id):
+    if can_edit_topic(topic_id):
         button_list.append(
             A(icon_edit, 'Edit', _class='btn btn-primary',
               _href=URL('default', 'edit_topic', args=[topic_id])))
-    if access.can_edit_topic(topic_id):
+    if can_edit_topic(topic_id):
         button_list.append(
             A(icon_delete, 'Delete', _class='btn btn-danger',
               _href=URL('default', 'delete_topic', args=[topic_id])))
@@ -101,7 +100,7 @@ def delete_topic():
     """Deletion of a topic.  This simply makes a topic not active for the main list
     of topics, but it does not otherwise affect the system."""
     topic_id = request.args(0)
-    if not access.can_delete_topic(topic_id):
+    if not can_delete_topic(topic_id):
         session.flash = T('You do not have the permission to delete a topic')
         redirect(URL('default', 'index'))
     # TODO: improve code below.  This should be done in the index via a modal form.
@@ -130,7 +129,7 @@ def delete_topic():
 def edit_topic():
     """Allows editing of a topic.  The parameter is the topic id."""
     topic_id = request.args(0)
-    if not access.can_edit_topic(topic_id):
+    if not can_edit_topic(topic_id):
         session.flash = T('You do not have the permission to edit this topic')
         redirect(URL('main', 'index'))
     topic = db.topic(topic_id)
@@ -150,7 +149,7 @@ def edit_topic():
 
 @auth.requires_login()
 def create_topic():
-    if not access.can_create_topic():
+    if not can_create_topic():
         session.flash = T('You do not have the permission to create a topic')
         redirect(URL('default', 'index'))
     form = SQLFORM(db.topic)
