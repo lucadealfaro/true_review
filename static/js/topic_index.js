@@ -2,16 +2,15 @@ var app = function() {
 
     self = {};
 
-    Vue.config.delimiters = ['${', '}'];
-    Vue.config.unsafeDelimiters = ['!{', '}'];
     Vue.config.silent = false; // show all warnings
-    Vue.config.async = true; // for debugging only
 
     // The list of papers.
     self.papers = [];
 
     self.vue = new Vue({
         el: "#topics-div",
+        delimiters: ['${', '}'],
+        unsafeDelimiters: ['!{', '}'],
         mounted: get_data,
         data: {
             papers: self.papers,
