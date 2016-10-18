@@ -66,7 +66,7 @@ def topic_index():
         session.flash = T('No such topic')
         redirect(URL('default', 'index'))
     return dict(
-        topic_name = topic.name,
+        topic=topic,
     )
 
 

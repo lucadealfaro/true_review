@@ -1,30 +1,48 @@
 {{extend 'layout.html'}}
 
 {{block header}}
-
+    <script src="{{=URL('static', 'js/vue.js')}}"></script>
 {{end}}
 
-<h1>{{=topic.name}}</h1>
+<div class="main_content" id="topics-div">
 
-<h2>Papers</h2>
+    <h1>{{=topic.name}}</h1>
 
-<div id="papers-div">
+    <h2>Papers</h2>
 
-    <table>
-        <thead>
-        <tr>
-            <th>Paper</th>
-        </tr>
-        </thead>
-        <tbody>
+    <div id="papers-div">
 
-        </tbody>
-    </table>
+        <table>
+            <thead>
+            <tr>
+                <th></th>
+                <th>Title</th>
+                <th>Authors</th>
+                <th v-if="show_paper_scores">N Reviews</th>
+                <th v-if="show_paper_scores">Score</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="paper in papers">
+                <td><span v-if="paper.is_primary_topic">{{=icon_primary_paper}}</span></td>
+                <td><a v-bind:href="paper.view_url">({paper.title})</a></td>
+                <td>${paper.authors}</td>
+                <td v-if="show_paper_scores">${paper.num_reviews}</td>
+                <td v-if="show_paper_scores">${paper.score}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div id="show_more_papers" class="show_more"><span class="btn btn-default">Load more</span></div>
+
+    </div>
+
+    <h2>Reviewers</h2>
+
+    <div id="reviewers-div"></div>
+
 
 </div>
 
-<h2>Reviewers</h2>
-
-<div id="reviewers-div"></div>
-
-<script src="{{=URL('static', 'topic_index.js')}}"></script>
+<script>var topic_id = "{{=topic.id}}";</script>
+<script src="{{=URL('static', 'js/topic_index.js')}}"></script>

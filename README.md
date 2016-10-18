@@ -6,6 +6,7 @@ For more information about the TrueReview project, please see https://arxiv.org/
 
 - Luca de Alfaro (luca@dealfaro.com)
 - Marco Faella (marfaella@gmail.com)
+- Rakshit Agrawal (ragrawa1@ucsc.edu)
 - Massimo Di Pierro (mdipierro@gmail.com)
 
 # Installation
