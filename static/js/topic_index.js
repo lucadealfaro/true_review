@@ -4,14 +4,16 @@ var app = function() {
 
     Vue.config.silent = false; // show all warnings
 
-    // The list of papers.
-    self.papers = [];
-
     // Function to get the data.
     self.get_data = function () {
-        var url = "/api/topic_papers/" + topic_id;
+        var url = "/api/topic_papers/" + topic_id + "?";
+        url += $.param({
+            requested_num_papers: self.vue.requested_num_papers,
+            primary_papers: self.vue.primary_papers,
+            sort_by: self.vue.sort_by,
+            sort_descending: self.vue.sort_descending
+        });
         $.getJSON(url, function (data) {
-            self.papers = data.papers;
             self.vue.papers = data.papers;
             self.vue.can_review = data.can_review;
             self.vue.can_add_paper = data.can_add_paper;
@@ -25,28 +27,30 @@ var app = function() {
     };
     self.set_primary = function(b) {
         self.vue.primary_papers = b;
-        // TODO: Reload data. 
+        // TODO: Reload data.
     };
 
     self.vue = new Vue({
         el: "#topics-div",
         delimiters: ['${', '}'],
         unsafeDelimiters: ['!{', '}'],
-        mounted: function () {
-            self.get_data();
-            $("#topics-div").show();
-        },
         data: {
-            papers: self.papers,
+            papers: [],
+            requested_num_papers: 20,
             primary_papers: true,
             show_paper_scores: false,
             can_review: false,
-            can_add_paper: false
+            can_add_paper: false,
+            sort_by: "score",
+            sort_descending: true
         },
         methods: {
             set_scores: self.set_scores
         }
     });
+
+    self.get_data();
+    $("#topics-div").show();
 
     return self;
 };
