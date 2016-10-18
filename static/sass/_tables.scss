@@ -1,6 +1,6 @@
-div#result_table {
+div.result_table {
   table {
-    width: 90%;
+    width: 100%;
     margin: 1em auto 1em auto;
     tr {
       border-bottom: 1px solid $clrTableLines;
@@ -8,6 +8,10 @@ div#result_table {
       &:first-child {
         border-top: 1px solid $clrTableLines;
       }
+    }
+    th {
+      padding: 5px 0.5em 5px 0.5em;
+      background: $clrTop;
     }
     td {
       padding: 4px 0.5em 4px 0.5em;

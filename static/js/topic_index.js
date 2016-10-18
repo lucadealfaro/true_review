@@ -2,7 +2,7 @@ var app = function() {
 
     self = {};
 
-    Vue.config.delimiters = ['({', '})'];
+    Vue.config.delimiters = ['${', '}'];
     Vue.config.unsafeDelimiters = ['!{', '}'];
     Vue.config.silent = false; // show all warnings
     Vue.config.async = true; // for debugging only
@@ -22,10 +22,13 @@ var app = function() {
     function get_data() {
         var url = "/api/topic_papers/" + topic_id;
         $.getJSON(url, function (data) {
+            self.papers = data.papers;
             self.vue.papers = data.papers;
         })
     }
 
+    get_data();
+    $("#topics-div").show();
     return self;
 };
 

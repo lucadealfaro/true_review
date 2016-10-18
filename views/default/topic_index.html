@@ -4,14 +4,13 @@
     <script src="{{=URL('static', 'js/vue.js')}}"></script>
 {{end}}
 
-<div class="main_content" id="topics-div">
+<div class="main_content" id="topics-div" style="display:none">
 
     <h1>{{=topic.name}}</h1>
 
     <h2>Papers</h2>
 
-    <div id="papers-div">
-
+    <div id="papers-div" class="result_table">
         <table>
             <thead>
             <tr>
@@ -25,7 +24,7 @@
             <tbody>
             <tr v-for="paper in papers">
                 <td><span v-if="paper.is_primary_topic">{{=icon_primary_paper}}</span></td>
-                <td><a v-bind:href="paper.view_url">({paper.title})</a></td>
+                <td><a v-bind:href="paper.view_url">${paper.title}</a></td>
                 <td>${paper.authors}</td>
                 <td v-if="show_paper_scores">${paper.num_reviews}</td>
                 <td v-if="show_paper_scores">${paper.score}</td>

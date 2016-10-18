@@ -704,25 +704,30 @@ h2 {
 }
 
 /* line 2, ../sass/_tables.scss */
-div#result_table table {
-  width: 90%;
+div.result_table table {
+  width: 100%;
   margin: 1em auto 1em auto;
 }
 /* line 5, ../sass/_tables.scss */
-div#result_table table tr {
+div.result_table table tr {
   border-bottom: 1px solid #ddd;
   text-align: left;
 }
 /* line 8, ../sass/_tables.scss */
-div#result_table table tr:first-child {
+div.result_table table tr:first-child {
   border-top: 1px solid #ddd;
 }
 /* line 12, ../sass/_tables.scss */
-div#result_table table td {
+div.result_table table th {
+  padding: 5px 0.5em 5px 0.5em;
+  background: #dddddd;
+}
+/* line 16, ../sass/_tables.scss */
+div.result_table table td {
   padding: 4px 0.5em 4px 0.5em;
 }
 
-/* line 18, ../sass/_tables.scss */
+/* line 22, ../sass/_tables.scss */
 div.table_footer {
   display: block;
   width: 90%;
@@ -730,12 +735,12 @@ div.table_footer {
   text-align: right;
   color: #666;
 }
-/* line 24, ../sass/_tables.scss */
+/* line 28, ../sass/_tables.scss */
 div.table_footer span.pagine {
   color: #777;
   cursor: pointer;
 }
-/* line 27, ../sass/_tables.scss */
+/* line 31, ../sass/_tables.scss */
 div.table_footer span.pagine.disabled i.fa {
   color: #ddd;
   cursor: not-allowed;
