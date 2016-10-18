@@ -35,4 +35,6 @@ def topic_papers():
         is_primary_topic = p.paper_in_topic.is_primary,
     ) for p in records]
     result['papers'] = papers
+    result['can_review'] = can_review(topic.id)
+    result['can_add_paper'] = can_add_paper(topic.id)
     return response.json(result)

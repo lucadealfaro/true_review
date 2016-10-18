@@ -14,7 +14,11 @@ var app = function() {
         mounted: get_data,
         data: {
             papers: self.papers,
-            show_paper_scores: false
+            primary_papers: true,
+            show_paper_scores: false,
+            show_all_papers: true,
+            can_review: false,
+            can_add_paper: false
         }
     });
 
@@ -23,6 +27,8 @@ var app = function() {
         $.getJSON(url, function (data) {
             self.papers = data.papers;
             self.vue.papers = data.papers;
+            self.vue.can_review = data.can_review;
+            selv.vue.can_add_paper = data.can_add_paper;
         })
     }
 
