@@ -43,7 +43,7 @@ def topic_papers():
     ) for p in records]
     result['has_more'] = len(papers) > end_idx - start_idx
     papers = papers[:end_idx - start_idx]
-    result['papers'] = papers
+    result['items'] = papers
     result['can_review'] = can_review(topic.id)
     result['can_add_paper'] = can_add_paper(topic.id)
     return response.json(result)

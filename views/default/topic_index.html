@@ -5,12 +5,10 @@
 {{end}}
 
 <div class="main_content">
-    <div id="topics-div" style="display:none">
+    <h1>{{=topic.name}}</h1>
 
-        <h1>{{=topic.name}}</h1>
-
+    <div id="papers-div" v-if="data_ready">
         <h2>Papers</h2>
-
         <div class="button_bar">
             <button class="btn btn-success btn-sm" v-on:click="set_primary(true)" v-bind:class="{'disabled': primary_papers}">{{=icon_primary_paper}}Primary topic papers</button>
             <button class="btn btn-success btn-sm" v-on:click="set_primary(false)" v-bind:class="{'disabled': !primary_papers}">{{=icon_all_paper}}All topic papers</button>
@@ -19,8 +17,7 @@
             <!-- <button class="btn btn-primary btn-sm" v-bind:class="{'disabled': !can_review}">{{=icon_pick_review}}Choose paper to review</button> -->
             <a class="btn btn-warning btn-sm" v-bind:class="{'disabled': !can_add_paper}" href="{{=URL('default', 'edit_paper', vars=dict(topic=topic.id))}}">{{=icon_add}}Add paper</a>
         </div>
-
-        <div id="papers-div" class="result_table">
+        <div class="result_table">
             <table>
                 <thead>
                 <tr>
@@ -41,17 +38,32 @@
                 </tr>
                 </tbody>
             </table>
-
-            <div id="show_more_papers" v-if="has_more" class="show_more"><button class="btn btn-default" v-on:click="get_more_papers()">Load more</button></div>
-
+            <div v-if="has_more" class="show_more"><button class="btn btn-default" v-on:click="get_more()">Load more</button></div>
         </div>
-
-        <h2>Reviewers</h2>
-
-        <div id="reviewers-div"></div>
-
-
     </div>
+
+    <div id="reviewers-div" style="display:none">
+        <h2>Reviewers</h2>
+        <div class="result_table">
+            <table>
+                <thead>
+                <tr>
+                    <th></th>
+                    <th v-on:click="toggle_sort('score')"><i class="fa" v-bind:class="{'fa-sort-up': is_sort_up.score, 'fa-sort-down': is_sort_down.score, 'fa-sort': !(is_sort_up.score || is_sort_down.score)}"></i>N Reviews</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="reviewer in reviewers">
+                    <td v-if="reviewer.has_link"><a v-bind:href="reviewer.link">${reviewer.name}</a></td>
+                    <td v-if="!reviewer.has_link">${reviewer.name}</td>
+                    <td v-if="show_paper_scores">${reviewer.score}</td>
+                </tr>
+                </tbody>
+            </table>
+            <div v-if="has_more" class="show_more"><button class="btn btn-default" v-on:click="get_more()">Load more</button></div>
+        </div>
+    </div>
+
 </div>
 
 <script>var topic_id = "{{=topic.id}}";</script>

@@ -10,13 +10,10 @@ def represent_date(v, r):
     return f.formatter(v)
 
 def get_email(u):
-    return '' if u is None else (
-        '' if u.email is None else
-        '<' + u.email + '>'
-    )
+    return u.email
 
 def get_user_email():
-    return get_email(auth.user) if auth.user else None
+    return auth.user.email if auth.user else None
 
 def represent_author(v, r):
     return format_author(db.auth_user(v))

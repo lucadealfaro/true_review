@@ -125,13 +125,13 @@ def reviewers_topic_grid():
     - topic_id (in path)
     """
     topic = db.topic(request.args(0)) or component_fail(T('No such topic'))
-    q = ((db.reviewer.topic == topic.id) &
-         (db.reviewer.user == db.auth_user.id))
+    q = ((db.role.topic == topic.id) &
+         (db.role.user_email == get_user_email()))
     grid = SQLFORM.grid(q,
         args = request.args[:1], # First is topic_id
-        orderby=~db.reviewer.reputation,
-        field_id=db.reviewer.id,
-        fields=[db.reviewer.reputation, db.auth_user.display_name, db.auth_user.affiliation, db.auth_user.link],
+        orderby=~db.role.reputation,
+        field_id=db.role.id,
+        fields=[db.role.reputation, db.auth_user.display_name, db.auth_user.affiliation, db.auth_user.link],
         csv=False, details=True,
         create=False, editable=False, deletable=False,
         maxtextlength=48,
@@ -224,7 +224,7 @@ def paper_review_grid():
         logger.info("get_review_history : %r %r %r" % (paper_id, topic_id, r))
         review_history_len = db((db.review.paper_id == paper_id) &
                                 (db.review.topic == topic_id) &
-                                (db.review.author == r.author)).count()
+                                (db.review.user_email == r.user_email)).count()
         return '' if review_history_len < 2 else A(T('Review history'), cid=request.cid,
                                                      _href=URL('components', 'review_history',
                                                                args=[r.review_id, paper_id]))
@@ -238,7 +238,7 @@ def paper_review_grid():
             return A(T('View'), _href=URL('default', 'view_specific_paper_version', args=[r.paper]))
     links = []
     db.review.paper.readable = False
-    db.review.author.readable = False
+    db.review.user_email.readable = False
     # Link to review edit history if any.
     links.append(dict(header='',
                       body=lambda r: get_review_history(r)))
@@ -248,8 +248,8 @@ def paper_review_grid():
     # edit_review_link=A(T('Edit'), cid=request.cid, _href=URL('components', 'do_review', args=[paper_id, topic_id]))
     grid = SQLFORM.grid(q,
         args=request.args[:2],
-        fields=[db.review.grade, db.review.useful_count, db.review.content, db.review.review_id,
-                db.review.paper_id, db.review.paper, db.review.author, db.review.start_date],
+        fields=[db.review.grade, db.review.useful_count, db.review.review_content, db.review.review_id,
+                db.review.paper_id, db.review.paper, db.review.user_email, db.review.start_date],
         links=links,
         orderby=~db.review.start_date,
         details=True, csv=False,
@@ -271,7 +271,7 @@ def paper_reviews():
     button_list = []
     if auth.user_id is not None:
         # We let a user add a review only if it has not written one already.
-        no_user_review = db((db.review.author == auth.user_id) &
+        no_user_review = db((db.review.user_email == get_user_email()) &
                             (db.review.paper_id == paper_id)).isempty()
         if no_user_review and can_review(topic_id):
             button_review = A(icon_add, T('Write a review'),
@@ -318,15 +318,15 @@ def do_review():
     if not is_view and not can_review(topic.id):
         component_fail(T('You do not have the permission to perform reviews in this topic'))
     # Fishes out the current review, if any.
-    current_review = db((db.review.author == auth.user_id) &
+    current_review = db((db.review.user_email == get_user_email()) &
                         (db.review.paper_id == paper.paper_id) &
                         (db.review.topic == topic.id) &
                         (db.review.end_date == None)).select().first()
     # Sets some defaults.
-    logger.info("My user id: %r" % auth.user_id)
+    logger.info("My user email: %r" % get_user_email())
     db.review.paper.writable = False
     db.review.paper_id.readable = False
-    db.review.author.default = auth.user_id
+    db.review.user_email.default = get_user_email()
     db.review.paper_id.default = paper.paper_id
     db.review.paper.default = paper.id
     db.review.topic.default = topic.id
@@ -336,8 +336,8 @@ def do_review():
     db.review.old_score.default = paper_in_topic.score
     # Creates the form for editing.
     form = SQLFORM(db.review, record=current_review, readonly=is_view)
-    form.vars.author = auth.user_id
-    form.vars.content = None if current_review is None else text_store_read(current_review.content)
+    form.vars.user_email = get_user_email()
+    form.vars.review_content = None if current_review is None else text_store_read(current_review.review_content)
     if form.validate():
         # We must write the review as a new review.
         # First, we close the old review if any.
@@ -349,27 +349,18 @@ def do_review():
         if review_id is None:
             review_id = review_utils.get_random_id()
         # Then, writes the current review.
-        db.review.insert(author=auth.user_id,
+        db.review.insert(user_email=get_user_email(),
                          paper_id=paper.paper_id,
                          review_id=review_id,
                          paper=paper.id,
                          topic=topic.id,
                          start_date=now,
                          end_date=None,
-                         content=str(text_store_write(form.vars.content)),
+                         review_content=str(text_store_write(form.vars.content)),
                          old_score=paper_in_topic.score,
                          grade=form.vars.grade,
                          )
-        # If the reviewer does not exist, adds it.
-        reviewer = db((db.reviewer.user == auth.user_id) &
-                      (db.reviewer.topic == topic.id)).select().first()
-        if reviewer is None:
-            # Previously not existing.
-            db.reviewer.insert(user=auth.user_id,
-                               topic=topic.id,
-                               is_reviewer=True)
-        elif not reviewer.is_reviewer:
-            reviewer.update_record(is_reviewer=True)
+        add_reviewer_to_topic(get_user_email(), topic.id)
         session.flash = T('Your review has been accepted.')
         redirect(URL('components', 'do_review', args=[paper.paper_id, topic_id, 'v']))
     button_list = []

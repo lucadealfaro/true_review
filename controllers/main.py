@@ -82,13 +82,6 @@ def edit_topic():
 
 
 
-def view_paper():
-    """Views a paper, including the details of the paper, and all the reviews.
-     Arguments:
-         - paper_id
-    """
-    return dict(paper_id=request.args(0),
-                topic_id=request.args(1))
 
 
 

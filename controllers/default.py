@@ -311,6 +311,15 @@ def edit_paper():
     return dict(form=form, is_create=is_create)
 
 
+def view_paper():
+    """Views a paper, including the details of the paper, and all the reviews.
+     Arguments:
+         - paper_id
+    """
+    return dict(paper_id=request.args(0),
+                topic_id=request.args(1))
+
+
 def view_paper_versions():
     q = (db.paper.paper_id == request.args(0))
     grid = SQLFORM.grid(q,

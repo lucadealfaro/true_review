@@ -1,4 +1,4 @@
-var app = function() {
+var paper_app = function() {
 
     self = {};
 
@@ -31,7 +31,7 @@ var app = function() {
         } else {
             self.vue.is_sort_down[col] = true;
         }
-        self.get_papers();
+        self.get_items();
     };
 
     function get_url(start_idx, end_idx) {
@@ -52,39 +52,40 @@ var app = function() {
     }
 
     // Function to get the data.
-    self.get_papers = function () {
+    self.get_items = function () {
         $.getJSON(get_url(0, 20), function (data) {
             self.vue.has_more = data.has_more;
-            self.vue.papers = data.papers;
+            self.vue.items = data.items;
             self.vue.can_review = data.can_review;
             self.vue.can_add_paper = data.can_add_paper;
         })
     };
 
-    // Functions handling buttons.
+    // Functions handling paper buttons.
 
     self.set_scores = function (b) {
         self.vue.show_paper_scores = b;
     };
     self.set_primary = function(b) {
         self.vue.primary_papers = b;
-        self.get_papers();
+        self.get_items();
     };
-
-    self.get_more_papers = function () {
-        var num_papers = self.vue.papers.length;
+    self.get_more = function () {
+        var num_papers = self.vue.items.length;
         $.getJSON(get_url(num_papers, num_papers + 50), function (data) {
             self.vue.has_more = data.has_more;
-            self.extend(self.vue.papers, data.papers);
+            self.extend(self.vue.items, data.items);
         });
     };
 
+    // The vue.
+
     self.vue = new Vue({
-        el: "#topics-div",
+        el: "#items-div",
         delimiters: ['${', '}'],
         unsafeDelimiters: ['!{', '}'],
         data: {
-            papers: [],
+            items: [],
             primary_papers: true,
             show_paper_scores: false,
             can_review: false,
@@ -97,15 +98,15 @@ var app = function() {
             set_scores: self.set_scores,
             set_primary: self.set_primary,
             toggle_sort: self.toggle_sort,
-            get_more_papers: self.get_more_papers
+            get_more: self.get_more
         }
     });
 
-    self.get_papers();
+    self.get_items();
     $("#topics-div").show();
 
     return self;
 };
 
-var APP = null;
-jQuery(function(){APP = app();});
+var PAPER_APP = null;
+jQuery(function(){PAPER_APP = paper_app();});
