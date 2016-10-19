@@ -4,6 +4,13 @@ var app = function() {
 
     Vue.config.silent = false; // show all warnings
 
+    // Extends an array
+    self.extend = function(a, b) {
+        for (var i = 0; i < b.length; i++) {
+            a.push(b[i]);
+        }
+    };
+
     // Sortable fields in table.
     var sortable = ['title', 'score', 'num_reviews'];
 
@@ -66,12 +73,11 @@ var app = function() {
 
     self.get_more_papers = function () {
         var num_papers = self.vue.papers.length;
-        $.getJSON(get_url(num_papers + 1, num_papers + 21), function (data) {
+        $.getJSON(get_url(num_papers, num_papers + 50), function (data) {
             self.vue.has_more = data.has_more;
-            self.vue.papers.push(data.papers);
+            self.extend(self.vue.papers, data.papers);
         });
     };
-
 
     self.vue = new Vue({
         el: "#topics-div",

@@ -41,8 +41,9 @@ def topic_papers():
         score = p.paper_in_topic.score,
         is_primary_topic = p.paper_in_topic.is_primary,
     ) for p in records]
+    result['has_more'] = len(papers) > end_idx - start_idx
+    papers = papers[:end_idx - start_idx]
     result['papers'] = papers
     result['can_review'] = can_review(topic.id)
     result['can_add_paper'] = can_add_paper(topic.id)
-    result['has_more'] = len(papers) > end_idx - start_idx
     return response.json(result)
