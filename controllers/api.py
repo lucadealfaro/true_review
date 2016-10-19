@@ -7,10 +7,16 @@ def topic_papers():
     result = dict(papers=[], has_more=False)
     if topic is None:
         return response.json(result)
-    orderby = db.paper.start_date # Fix
-    all_papers = True # Fix
-    start_idx = 0 # Fix
-    end_idx = 20 # Fix
+    start_idx = int(request.vars.start_idx) if request.vars.start_idx is not None else 0
+    end_idx = int(request.vars.end_idx) if request.vars.end_idx is not None else 0
+    all_papers = False if request.vars.primary_papers == 'true' else True
+    orderby = ~db.paper_in_topic.score
+    if request.vars.sort_score is not None:
+        orderby = db.paper_in_topic.score if request.vars.sort_score == 'up' else ~db.paper_in_topic.score
+    if request.vars.sort_title is not None:
+        orderby = db.paper.title if request.vars.sort_title == 'up' else ~db.paper.title
+    if request.vars.sort_num_reviews is not None:
+        orderby = db.paper_in_topic.num_reviews if request.vars.sort_num_reviews == 'up' else ~db.paper_in_topic.num_reviews
     if all_papers:
         q = ((db.paper_in_topic.topic == topic.id) &
              (db.paper_in_topic.paper_id == db.paper.paper_id) &
@@ -25,6 +31,7 @@ def topic_papers():
              (db.paper_in_topic.topic == topic_id) &
              (db.paper_in_topic.end_date == None)
              )
+    logger.info("Query; %r" % q)
     records = db(q).select(orderby=orderby, limitby=(start_idx, end_idx + 1))
     papers = [dict(
         title = p.paper.title,
@@ -37,4 +44,5 @@ def topic_papers():
     result['papers'] = papers
     result['can_review'] = can_review(topic.id)
     result['can_add_paper'] = can_add_paper(topic.id)
+    result['has_more'] = len(papers) > end_idx - start_idx
     return response.json(result)
