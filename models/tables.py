@@ -32,8 +32,8 @@ def represent_author(v, r):
 def format_name(u):
     if u is None:
         return T('N/A')
-    s = " ".join([u.first_name, u.last_name]) + '<' + get_email(u) + '>'
-    return A(s, _href=u.link)
+    s = u.display_name + ' <' + get_email(u) + '>'
+    return s
 
 
 
