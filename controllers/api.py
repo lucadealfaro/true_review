@@ -43,7 +43,7 @@ def topic_papers():
     ) for p in records]
     result['has_more'] = len(papers) > end_idx - start_idx
     papers = papers[:end_idx - start_idx]
-    result['items'] = papers
+    result['papers'] = papers
     result['can_review'] = can_review(topic.id)
     result['can_add_paper'] = can_add_paper(topic.id)
     logger.info("Returning items: %r", papers)
@@ -64,16 +64,16 @@ def topic_reviewers():
          (db.role.user_email == get_user_email()))
     logger.info("Query; %r" % q)
     records = db(q).select(orderby=~db.role.reputation, limitby=(start_idx, end_idx + 1))
-    items = []
+    reviewers = []
     for p in records:
         name, link = get_user_name_and_link(p.user_email)
-        items.append(dict(
+        reviewers.append(dict(
             name=name,
             score=p.reputation,
             link=link,
             has_link=link is not None,
         ))
-    result['has_more'] = len(items) > end_idx - start_idx
-    items = items[:end_idx - start_idx]
-    result['items'] = items
+    result['has_more'] = len(reviewers) > end_idx - start_idx
+    reviewers = reviewers[:end_idx - start_idx]
+    result['reviewers'] = reviewers
     return response.json(result)

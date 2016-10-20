@@ -7,60 +7,63 @@
 <div class="main_content">
     <h1>{{=topic.name}}</h1>
 
-    <div id="papers-div" v-if="data_ready">
-        <h2>Papers</h2>
-        <div class="button_bar">
-            <button class="btn btn-success btn-sm" v-on:click="set_primary(true)" v-bind:class="{'disabled': primary_papers}">{{=icon_primary_paper}}Primary topic papers</button>
-            <button class="btn btn-success btn-sm" v-on:click="set_primary(false)" v-bind:class="{'disabled': !primary_papers}">{{=icon_all_paper}}All topic papers</button>
-            <button class="btn btn-info btn-sm" v-on:click="set_scores(true)" v-bind:class="{'disabled': show_paper_scores}">{{=icon_view}}View ratings</button>
-            <button class="btn btn-info btn-sm" v-on:click="set_scores(false)" v-bind:class="{'disabled': !show_paper_scores}">{{=icon_hide}}Hide ratings</button>
-            <!-- <button class="btn btn-primary btn-sm" v-bind:class="{'disabled': !can_review}">{{=icon_pick_review}}Choose paper to review</button> -->
-            <a class="btn btn-warning btn-sm" v-bind:class="{'disabled': !can_add_paper}" href="{{=URL('default', 'edit_paper', vars=dict(topic=topic.id))}}">{{=icon_add}}Add paper</a>
-        </div>
-        <div class="result_table">
-            <table>
-                <thead>
-                <tr>
-                    <th></th>
-                    <th class="sort" v-on:click="toggle_sort('title')"><i class="fa" v-bind:class="{'fa-sort-up': is_sort_up.title, 'fa-sort-down': is_sort_down.title, 'fa-sort': !(is_sort_up.title || is_sort_down.title)}"></i>Title</th>
-                    <th>Authors</th>
-                    <th v-if="show_paper_scores" v-on:click="toggle_sort('score')"><i class="fa" v-bind:class="{'fa-sort-up': is_sort_up.score, 'fa-sort-down': is_sort_down.score, 'fa-sort': !(is_sort_up.score || is_sort_down.score)}"></i>N Reviews</th>
-                    <th v-if="show_paper_scores" v-on:click="toggle_sort('num_reviews')"><i class="fa" v-bind:class="{'fa-sort-up': is_sort_up.num_reviews, 'fa-sort-down': is_sort_down.num_reviews, 'fa-sort': !(is_sort_up.num_reviews || is_sort_down.num_reviews)}"></i>Score</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="paper in items">
-                    <td><span v-if="paper.is_primary_topic">{{=icon_primary_paper}}</span></td>
-                    <td><a v-bind:href="paper.view_url">${paper.title}</a></td>
-                    <td>${paper.authors}</td>
-                    <td v-if="show_paper_scores">${paper.num_reviews}</td>
-                    <td v-if="show_paper_scores">${paper.score}</td>
-                </tr>
-                </tbody>
-            </table>
-            <div v-if="has_more" class="show_more"><button class="btn btn-default" v-on:click="get_more()">Load more</button></div>
-        </div>
-    </div>
+    <div id="vue_div" style="display:none">
 
-    <div id="reviewers-div" v-if="data_ready">
-        <h2>Reviewers</h2>
-        <div class="result_table">
-            <table>
-                <thead>
-                <tr>
-                    <th></th>
-                    <th>Reputation</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="reviewer in items">
-                    <td v-if="reviewer.has_link"><a v-bind:href="reviewer.link">${reviewer.name}</a></td>
-                    <td v-if="!reviewer.has_link">${reviewer.name}</td>
-                    <td>${reviewer.score}</td>
-                </tr>
-                </tbody>
-            </table>
-            <div v-if="has_more" class="show_more"><button class="btn btn-default" v-on:click="get_more()">Load more</button></div>
+        <div id="papers-div" v-if="show_papers">
+            <h2>Papers</h2>
+            <div class="button_bar">
+                <button class="btn btn-success btn-sm" v-on:click="set_primary(true)" v-bind:class="{'disabled': primary_papers}">{{=icon_primary_paper}}Primary topic papers</button>
+                <button class="btn btn-success btn-sm" v-on:click="set_primary(false)" v-bind:class="{'disabled': !primary_papers}">{{=icon_all_paper}}All topic papers</button>
+                <button class="btn btn-info btn-sm" v-on:click="set_scores(true)" v-bind:class="{'disabled': show_paper_scores}">{{=icon_view}}View ratings</button>
+                <button class="btn btn-info btn-sm" v-on:click="set_scores(false)" v-bind:class="{'disabled': !show_paper_scores}">{{=icon_hide}}Hide ratings</button>
+                <!-- <button class="btn btn-primary btn-sm" v-bind:class="{'disabled': !can_review}">{{=icon_pick_review}}Choose paper to review</button> -->
+                <a class="btn btn-warning btn-sm" v-bind:class="{'disabled': !can_add_paper}" href="{{=URL('default', 'edit_paper', vars=dict(topic=topic.id))}}">{{=icon_add}}Add paper</a>
+            </div>
+            <div class="result_table">
+                <table>
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th class="sort" v-on:click="toggle_sort('title')"><i class="fa" v-bind:class="{'fa-sort-up': is_sort_up.title, 'fa-sort-down': is_sort_down.title, 'fa-sort': !(is_sort_up.title || is_sort_down.title)}"></i>Title</th>
+                        <th>Authors</th>
+                        <th v-if="show_paper_scores" v-on:click="toggle_sort('score')"><i class="fa" v-bind:class="{'fa-sort-up': is_sort_up.score, 'fa-sort-down': is_sort_down.score, 'fa-sort': !(is_sort_up.score || is_sort_down.score)}"></i>N Reviews</th>
+                        <th v-if="show_paper_scores" v-on:click="toggle_sort('num_reviews')"><i class="fa" v-bind:class="{'fa-sort-up': is_sort_up.num_reviews, 'fa-sort-down': is_sort_down.num_reviews, 'fa-sort': !(is_sort_up.num_reviews || is_sort_down.num_reviews)}"></i>Score</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="paper in papers">
+                        <td><span v-if="paper.is_primary_topic">{{=icon_primary_paper}}</span></td>
+                        <td><a v-bind:href="paper.view_url">${paper.title}</a></td>
+                        <td>${paper.authors}</td>
+                        <td v-if="show_paper_scores">${paper.num_reviews}</td>
+                        <td v-if="show_paper_scores">${paper.score}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div v-if="has_more_papers" class="show_more"><button class="btn btn-default" v-on:click="get_more()">Load more</button></div>
+            </div>
+        </div>
+
+        <div id="reviewers-div" v-if="show_reviewers">
+            <h2>Reviewers</h2>
+            <div class="result_table">
+                <table>
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Reputation</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="reviewer in reviewers">
+                        <td v-if="reviewer.has_link"><a v-bind:href="reviewer.link">${reviewer.name}</a></td>
+                        <td v-if="!reviewer.has_link">${reviewer.name}</td>
+                        <td>${reviewer.score}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div v-if="has_more_reviewers" class="show_more"><button class="btn btn-default" v-on:click="get_more()">Load more</button></div>
+            </div>
         </div>
     </div>
 
