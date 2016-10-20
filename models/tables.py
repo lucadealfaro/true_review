@@ -88,13 +88,11 @@ def represent_specific_paper_version(pid):
 
 # Paper score in topic
 db.define_table('paper_in_topic',
-                Field('paper_id'),
+                Field('paper', 'reference paper'),
                 Field('topic', 'reference topic'),
-                Field('is_primary', 'boolean'), # Is this the primary topic for the paper? If so it can be reviewed.
+                Field('is_primary', 'boolean'), # Redundant with field in paper.
                 Field('score', 'double', default=0),
                 Field('num_reviews', 'integer', default=0), # We need to have this info fast, hence the denormalization.
-                Field('start_date', 'datetime', default=datetime.utcnow()),
-                Field('end_date', 'datetime'), # If this is None, then the record is current.
                 )
 db.paper_in_topic.is_primary.readable = db.paper_in_topic.is_primary.writable = False
 db.paper_in_topic.paper_id.readable = False
@@ -120,6 +118,7 @@ db.define_table('review_application',
                 Field('justification', 'text'),
                 Field('outcome', 'integer')
                 )
+
 OUTCOME_TYPES = [
     (0, 'Pending'),
     (1, 'Approved'),
@@ -134,10 +133,8 @@ db.review_application.outcome.default = 0
 # author + paper form a key
 db.define_table('review',
                 Field('user_email', default=get_user_email()),
-                Field('paper_id',), # Reference to the paper series of which this is a paper.
                 Field('review_id'), # ID of this review through time.  Similar to paper_id for papers.
                 Field('paper', 'reference paper'), # A review is of a specific paper instance.
-                Field('topic', 'reference topic'), # Strictly speaking useless as can be reconstructed.  Keep?
                 Field('start_date', 'datetime', default=datetime.utcnow()),
                 Field('end_date', 'datetime'),
                 Field('review_content', 'text'), # Store pointer to text in other db.
@@ -149,8 +146,6 @@ db.review.user_email.label = T('Reviewer')
 db.review.user_email.represent = represent_author
 db.review.user_email.writable = False
 db.review.review_id.readable = db.review.review_id.writable = False
-db.review.paper_id.writable = False
-db.review.topic.writable = False
 db.review.start_date.writable = db.review.end_date.writable = False
 db.review.useful_count.writable = False
 db.review.old_score.readable = db.review.old_score.writable = False

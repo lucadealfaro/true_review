@@ -70,13 +70,6 @@ def topic_index():
     )
 
 
-def load_topic_index():
-    """Displays a topic.  This is a simple method, as most information
-    on the papers and on the reviews is provided via included tables and/or AJAX."""
-    topic = db.topic(request.args(0)) or redirect(URL('default', 'index'))
-    return dict(topic=topic)
-
-
 def view_topic():
     """Views the details of a topic."""
     topic_id = request.args(0)
@@ -230,15 +223,15 @@ def edit_paper():
             random_paper_id = review_utils.get_random_id()
             abstract_id = text_store_write(form.vars.abstract)
             # We write the paper.
-            db.paper.insert(paper_id=random_paper_id,
-                            title=form.vars.title,
-                            authors=form.vars.authors,
-                            abstract=abstract_id,
-                            paper_url=form.vars.file,
-                            primary_topic=form.vars.primary_topic,
-                            start_date=datetime.utcnow(),
-                            end_date=None
-                            )
+            db_paper_id = db.paper.insert(paper_id=random_paper_id,
+                                          title=form.vars.title,
+                                          authors=form.vars.authors,
+                                          abstract=abstract_id,
+                                          paper_url=form.vars.file,
+                                          primary_topic=form.vars.primary_topic,
+                                          start_date=datetime.utcnow(),
+                                          end_date=None
+                                          )
             session.flash = T('The paper has been added')
         else:
             random_paper_id = paper.paper_id
@@ -249,24 +242,18 @@ def edit_paper():
                 abstract_id = text_store_write(form.vars.abstract)
                 is_abstract_different = True
             session.flash = T('The paper has been updated')
-            if ((form.vars.title != paper.title) or
-                    (form.vars.authors != paper.authors) or
-                    is_abstract_different):
-                logger.info("The paper itself changed; moving to a new paper instance.")
-                # Closes the validity period of the previous instance of this paper.
-                paper.update_record(end_date=now)
-                # We write the paper.
-                db.paper.insert(paper_id=random_paper_id,
-                                title=form.vars.title,
-                                authors=form.vars.authors,
-                                abstract=abstract_id,
-                                file=form.vars.file,
-                                primary_topic=form.vars.primary_topic,
-                                start_date=datetime.utcnow(),
-                                end_date=None
-                                )
-            else:
-                logger.info("The paper itself is unchanged.")
+            # Closes the validity period of the previous instance of this paper.
+            paper.update_record(end_date=now)
+            # We write the paper.
+            db.paper.id = db.paper.insert(paper_id=random_paper_id,
+                                          title=form.vars.title,
+                                          authors=form.vars.authors,
+                                          abstract=abstract_id,
+                                          file=form.vars.file,
+                                          primary_topic=form.vars.primary_topic,
+                                          start_date=datetime.utcnow(),
+                                          end_date=None
+                                          )
 
         # Then, we take care of the topics.
         new_topics = set({form.vars.primary_topic}) | set(form.vars.secondary_topic_ids)
@@ -316,34 +303,11 @@ def view_paper():
      Arguments:
          - paper_id
     """
-    return dict(paper_id=request.args(0),
-                topic_id=request.args(1))
+    return dict(
+        signed_url=URL('api', 'paper_do', user_signature=True),
+        unsigned_url=URL('api')
+    )
 
-
-def view_paper_versions():
-    q = (db.paper.paper_id == request.args(0))
-    grid = SQLFORM.grid(q,
-        args=request.args[:1],
-        fields=[db.paper.title, db.paper.authors, db.paper.file, db.paper.start_date],
-        orderby=~db.paper.start_date,
-        editable=False, deletable=False, create=False,
-        details=True,
-        csv=False,
-        maxtextlength=32,
-        )
-    return dict(grid=grid)
-
-
-def view_specific_paper_version():
-    """Displays a specific paper version.  Called by paper id."""
-    paper = db.paper(request.args(0))
-    if paper is None:
-        session.flash = T('No such paper')
-        redirect(URL('default', 'index'))
-    form = SQLFORM(db.paper, record=paper, readonly=True)
-    all_versions_link = A('All versions', _href=URL('default', 'view_paper_versions', args=[paper.paper_id]))
-    return dict(form=form,
-                all_versions_link=all_versions_link)
 
 
 def user():
