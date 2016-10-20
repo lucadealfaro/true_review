@@ -46,4 +46,34 @@ def topic_papers():
     result['items'] = papers
     result['can_review'] = can_review(topic.id)
     result['can_add_paper'] = can_add_paper(topic.id)
+    logger.info("Returning items: %r", papers)
+    return response.json(result)
+
+
+def topic_reviewers():
+    """Returns the list of reviewers in a given topic."""
+    topic_id = request.args(0)
+    topic = db.topic(topic_id)
+    result = dict(papers=[], has_more=False)
+    if topic is None:
+        return response.json(result)
+    start_idx = int(request.vars.start_idx) if request.vars.start_idx is not None else 0
+    end_idx = int(request.vars.end_idx) if request.vars.end_idx is not None else 0
+    q = ((db.role.topic == topic.id) &
+         (db.role.is_reviewer == True) &
+         (db.role.user_email == get_user_email()))
+    logger.info("Query; %r" % q)
+    records = db(q).select(orderby=~db.role.reputation, limitby=(start_idx, end_idx + 1))
+    items = []
+    for p in records:
+        name, link = get_user_name_and_link(p.user_email)
+        items.append(dict(
+            name=name,
+            score=p.reputation,
+            link=link,
+            has_link=link is not None,
+        ))
+    result['has_more'] = len(items) > end_idx - start_idx
+    items = items[:end_idx - start_idx]
+    result['items'] = items
     return response.json(result)

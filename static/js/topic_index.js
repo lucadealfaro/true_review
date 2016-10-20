@@ -76,15 +76,17 @@ var paper_app = function() {
             self.vue.has_more = data.has_more;
             self.extend(self.vue.items, data.items);
         });
+        $("#reviewers-div").hide();
     };
 
     // The vue.
 
     self.vue = new Vue({
-        el: "#items-div",
+        el: "#papers-div",
         delimiters: ['${', '}'],
         unsafeDelimiters: ['!{', '}'],
         data: {
+            data_ready: false,
             items: [],
             primary_papers: true,
             show_paper_scores: false,
@@ -103,10 +105,76 @@ var paper_app = function() {
     });
 
     self.get_items();
-    $("#topics-div").show();
+    self.vue.data_ready = true;
 
     return self;
 };
 
 var PAPER_APP = null;
 jQuery(function(){PAPER_APP = paper_app();});
+
+
+var reviewer_app = function() {
+
+    self = {};
+
+    Vue.config.silent = false; // show all warnings
+
+    // Extends an array
+    self.extend = function(a, b) {
+        for (var i = 0; i < b.length; i++) {
+            a.push(b[i]);
+        }
+    };
+
+    function get_url(start_idx, end_idx) {
+        var pp = {
+            start_idx: start_idx,
+            end_idx: end_idx
+        };
+        return "/api/topic_reviewers/" + topic_id + "?" + $.param(pp);
+    }
+
+    // Function to get the data.
+    self.get_items = function () {
+        $.getJSON(get_url(0, 20), function (data) {
+            self.vue.has_more = data.has_more;
+            self.vue.items = data.items;
+        });
+    };
+
+    // Functions handling paper buttons.
+
+    self.get_more = function () {
+        var num_items = self.vue.items.length;
+        $.getJSON(get_url(num_items, num_items + 50), function (data) {
+            self.vue.has_more = data.has_more;
+            self.extend(self.vue.items, data.items);
+        });
+        $("#papers-div").hide();
+    };
+
+    // The vue.
+
+    self.vue = new Vue({
+        el: "#reviewers-div",
+        delimiters: ['${', '}'],
+        unsafeDelimiters: ['!{', '}'],
+        data: {
+            data_ready: false,
+            items: [],
+            has_more: false,
+        },
+        methods: {
+            get_more: self.get_more
+        }
+    });
+
+    self.get_items();
+    self.vue.data_ready = true;
+
+    return self;
+};
+
+var REVIEWER_APP = null;
+jQuery(function(){REVIEWER_APP = reviewer_app();});

@@ -15,14 +15,27 @@ def get_email(u):
 def get_user_email():
     return auth.user.email if auth.user else None
 
-def represent_author(v, r):
-    return format_author(db.auth_user(v))
+def get_user_name_and_link(e):
+    if auth.user:
+        u = db(db.auth_user.email == e).select().first()
+        name = format_name(u) if u is not None else ''
+        link = u.link if u.link else None
+        return name, link
 
-def format_author(u):
+def get_user_name(e):
+    u = db(db.auth_user.email == e).select().first()
+    return format_name(u) if u is not None else ''
+
+def represent_author(v, r):
+    return format_name()
+
+def format_name(u):
     if u is None:
         return T('N/A')
     s = " ".join([u.first_name, u.last_name]) + '<' + get_email(u) + '>'
     return A(s, _href=u.link)
+
+
 
 db.auth_user.format = '%(email)s'
 

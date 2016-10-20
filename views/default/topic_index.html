@@ -29,7 +29,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="paper in papers">
+                <tr v-for="paper in items">
                     <td><span v-if="paper.is_primary_topic">{{=icon_primary_paper}}</span></td>
                     <td><a v-bind:href="paper.view_url">${paper.title}</a></td>
                     <td>${paper.authors}</td>
@@ -42,21 +42,21 @@
         </div>
     </div>
 
-    <div id="reviewers-div" style="display:none">
+    <div id="reviewers-div" v-if="data_ready">
         <h2>Reviewers</h2>
         <div class="result_table">
             <table>
                 <thead>
                 <tr>
                     <th></th>
-                    <th v-on:click="toggle_sort('score')"><i class="fa" v-bind:class="{'fa-sort-up': is_sort_up.score, 'fa-sort-down': is_sort_down.score, 'fa-sort': !(is_sort_up.score || is_sort_down.score)}"></i>N Reviews</th>
+                    <th>Reputation</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="reviewer in reviewers">
+                <tr v-for="reviewer in items">
                     <td v-if="reviewer.has_link"><a v-bind:href="reviewer.link">${reviewer.name}</a></td>
                     <td v-if="!reviewer.has_link">${reviewer.name}</td>
-                    <td v-if="show_paper_scores">${reviewer.score}</td>
+                    <td>${reviewer.score}</td>
                 </tr>
                 </tbody>
             </table>
