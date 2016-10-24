@@ -40,7 +40,7 @@
                     </tr>
                     </tbody>
                 </table>
-                <div v-if="has_more_papers" class="show_more"><button class="btn btn-default" v-on:click="get_more()">Load more</button></div>
+                <div v-if="has_more_papers" class="show_more"><button class="btn btn-default" v-on:click="get_more_papers()">Load more</button></div>
             </div>
         </div>
 
@@ -62,7 +62,7 @@
                     </tr>
                     </tbody>
                 </table>
-                <div v-if="has_more_reviewers" class="show_more"><button class="btn btn-default" v-on:click="get_more()">Load more</button></div>
+                <div v-if="has_more_reviewers" class="show_more"><button class="btn btn-default" v-on:click="get_more_reviewers()">Load more</button></div>
             </div>
         </div>
     </div>

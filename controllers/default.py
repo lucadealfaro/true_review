@@ -23,7 +23,7 @@ def set_timezone():
     else:
         logger.warning("Invalid timezone received: %r" % tz_name)
 
-
+# TODO: use vue.js
 def index():
     """ Serves the main page."""
     # Displays list of topics.
@@ -60,6 +60,7 @@ def index():
 
 
 def topic_index():
+    """Displays papers and reviewers in a topic. Already in vue.js"""
     topic_id = request.args(0)
     topic = db.topic(topic_id)
     if topic is None:
@@ -71,7 +72,7 @@ def topic_index():
 
 
 def view_topic():
-    """Views the details of a topic."""
+    """Views the details of a topic. Work in progress."""
     topic_id = request.args(0)
     topic = db.topic(topic_id)
     if topic is None:
@@ -92,6 +93,7 @@ def view_topic():
                 )
 
 
+# TODO: use vue.js
 @auth.requires_login()
 def delete_topic():
     """Deletion of a topic.  This simply makes a topic not active for the main list
@@ -123,6 +125,7 @@ def delete_topic():
                 is_empty=is_empty)
 
 
+# TODO: use vue.js
 @auth.requires_login()
 def edit_topic():
     """Allows editing of a topic.  The parameter is the topic id."""
@@ -146,6 +149,7 @@ def edit_topic():
     return dict(form=form)
 
 
+# TODO: use vue.js
 @auth.requires_login()
 def create_topic():
     if not can_create_topic():
@@ -161,6 +165,7 @@ def create_topic():
     return dict(form=form)
 
 
+# TODO: use vue.js
 @auth.requires_login()
 def edit_paper():
     """This is a temporary page, so that we can add papers to
@@ -300,6 +305,7 @@ def edit_paper():
 
 def view_paper():
     """Views a paper, including the details of the paper, and all the reviews.
+    Work in progress.
      Arguments:
          - paper_id
     """

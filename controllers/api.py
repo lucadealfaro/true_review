@@ -83,41 +83,57 @@ def topic_reviewers():
 
 
 def get_paper_versions():
-    """Returns the list of versions of a paper.  The argument is the paper_id."""
-    q = (db.paper.paper_id == request.args(0))
-    versions = db(q).select(orderby=db.paper.start_date).as_list()
-    # Converts the dates.
-    for v in versions:
-        v['start_validity'] = datetime_validator.formatter(v.start_date)
-        v['end_validity'] = T('current') if v.end_date is None else datetime_validator.formatter(v.end_date)
+    """Gets information on all paper versions, including the topics of each version.
+    Called by paper_id"""
+    rows = db(db.paper.paper_id == request.args(0)).select(orderby=db.paper.start_date)
+    # Creates the representations.
+    versions = []
+    version_dict = {}
+    selected_version_idx = None
+    selected_version_id = None
+    for r in rows:
+        v = dict(
+            id=r.id,
+            paper_id=r.paper_id, # Redundant, but perhaps convenient.
+            title=r.title,
+            authors = ', '.join(r.authors),
+            paper_url = r.paper_url,
+            start_date = datetime_validator.formatter(r.start_date),
+            abstract = text_store_read(r.abstract),
+            topics = [], # To be filled below.
+            score = None, # To be filled below.
+            num_reviews = 0, # To be filled below.
+            selected = False, # The last version will be selected.
+        )
+        versions.append(v)
+        version_dict[v['id']] = v
+    if len(versions) > 0:
+        versions[-1].selected = True # The selected one is the last one.
+        selected_version_id = versions[-1].id
+        selected_version_idx = len(versions) - 1
+    # Reads all topics at once, to be faster.
+    rows = db((db.paper.paper_id == request.args(0)) &
+              (db.paper_in_topic.paper == db.paper.id) &
+              (db.paper_in_topic.topic == db.topic.id)).select()
+    for r in rows:
+        t = dict(
+            topic_id = r.topic.id,
+            topic_name = r.topic.name,
+            is_primary = r.paper_in_topic.is_primary,
+            score = r.paper_in_topic.score if r.paper_in_topic.is_primary else None,
+            num_reviews = r.paper_in_topic.num_reviews if r.paper_in_topic.is_primary else None,
+        )
+        v = version_dict[r.paper.id]
+        v['topics'].append(t)
+        if r.paper_in_topic.is_primary:
+            v['score'] = r.paper_in_topic.score
+            v['num_reviews'] = r.paper_in_topic.num_reviews
     return response.json(dict(
         versions=versions,
+        selected_version_idx=selected_version_idx,
+        selected_version_id=selected_version_id,
     ))
 
-
-def get_paper_topics():
-    """Returns the list of topics for the paper.
-    These topics can be used to access the reviews.
-    This is accessed by paper id."""
-    rows = db((db.paper_in_topic.paper == request.args(0)) &
-              (db.paper_in_topic.topic == db.topic.id)).select()
-    num_reviews = None
-    score = None
-    topics = []
-    for t in rows:
-        if t.paper_in_topic.is_primary:
-            num_reviews = t.num_reviews
-            score = t.score
-        topics.append(dict(
-            topic_id=t.topic.id,
-            topic_name=t.topic.name,
-            is_primary=t.paper_in_topic.is_primary,
-        ))
-    return response.json(dict(
-        num_reviews=num_reviews,
-        score=score,
-        topics=topics,
-    ))
 
 
 def get_paper_reviews():

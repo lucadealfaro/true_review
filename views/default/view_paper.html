@@ -1,10 +1,27 @@
-{{left_sidebar_enabled,right_sidebar_enabled=False,False}}
 {{extend 'layout.html'}}
 
 {{block header}}
+<script src="{{=URL('static', 'js/vue.js')}}"></script>
 {{end}}
 
-<h2>Paper</h2>
-{{=LOAD('components', 'paper_info', args=[paper_id])}}
+<div class="main_content">
+    <div id="vue_div" style="display:none">
+        <h2>Paper Revisions</h2>
+        <div class="version_list">
+            <div v-for="version in verions" class="paper_container">
+                <div v-bind:class="'selected': version.selected, 'nonselected': !version.selected">
+                    <span class="paper_version_date">
+                        <i class="fa" v-bind:class="'fa-check-square': version.selected, 'fa-clock-o': !version.selected"></i>
+                        Version: ${version.start_date}
+                    </span>
+                    <span class="paper_version_num_reviews">
+                        N. Reviews: ${version.num_reviews}
+                    </span>
+                </div>
+            </div>
+        </div>
 
-{{=LOAD('components', 'paper_reviews', args=[paper_id, topic_id])}}
+
+    </div>
+
+</div>
