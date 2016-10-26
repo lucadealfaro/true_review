@@ -241,11 +241,9 @@ def edit_paper():
         else:
             random_paper_id = paper.paper_id
             # Checks if anything has changed about the paper, as opposed to the topics.
-            is_abstract_different = False
             abstract_id = paper.abstract
             if form.vars.abstract != text_store_read(paper.abstract):
                 abstract_id = text_store_write(form.vars.abstract)
-                is_abstract_different = True
             session.flash = T('The paper has been updated')
             # Closes the validity period of the previous instance of this paper.
             paper.update_record(end_date=now)
@@ -262,7 +260,10 @@ def edit_paper():
 
         # Then, we take care of the topics.
         new_topics = set({form.vars.primary_topic}) | set(form.vars.secondary_topic_ids)
+        # ---qui---
         logger.info("new topics: %r" % new_topics)
+
+
         # First, we close the topics to which the paper no longer belongs.
         previous_occurrences = db((db.paper_in_topic.paper_id == random_paper_id) &
                                   (db.paper_in_topic.end_date == None)).select()

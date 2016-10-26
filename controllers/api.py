@@ -30,7 +30,7 @@ def topic_papers():
         q = (
             (db.paper.end_date == None) & # Paper is current.
             (db.paper.primary_topic == topic_id) & # And it has the indicated primary topic.
-            (db.paper_in_topic.topic == db.topic_id) & # Relation with ...
+            (db.paper_in_topic.topic == topic_id) & # Relation with ...
             (db.paper_in_topic.paper == db.paper.id) & # ...topic
             (db.topic.id == topic_id) # And the topic is the specified one.
         )

@@ -44,7 +44,7 @@ db.define_table('topic',
                 Field('name'),
                 Field('creation_date', 'datetime', default=datetime.utcnow()),
                 Field('description', 'text'), # Pointer to text table.
-                Field('created_by', default=get_email(auth.user)),
+                Field('created_by', default=get_user_email()),
                 Field('is_active', 'boolean', default=True), # Used to hide.
                 format = '%(name)s'
                 )
@@ -95,7 +95,6 @@ db.define_table('paper_in_topic',
                 Field('num_reviews', 'integer', default=0), # We need to have this info fast, hence the denormalization.
                 )
 db.paper_in_topic.is_primary.readable = db.paper_in_topic.is_primary.writable = False
-db.paper_in_topic.paper_id.readable = False
 represent_paper_score = lambda v, r: "%.2f" % v
 db.paper_in_topic.score.represent = represent_paper_score
 
@@ -155,7 +154,6 @@ db.review.start_date.label = T('Review date')
 db.review.review_content.represent = represent_text_field
 db.review.grade.requires = IS_FLOAT_IN_RANGE(0, 10.0)
 db.review.grade.label = 'Grade [0..10]'
-db.review.paper_id.readable = False
 db.review.id.readable = False
 db.review.review_content.label = T('Review')
 db.review.end_date.readable = False
