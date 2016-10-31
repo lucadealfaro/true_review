@@ -240,7 +240,6 @@ def edit_paper():
             session.flash = T('The paper has been added')
         else:
             random_paper_id = paper.paper_id
-            # Checks if anything has changed about the paper, as opposed to the topics.
             abstract_id = paper.abstract
             if form.vars.abstract != text_store_read(paper.abstract):
                 abstract_id = text_store_write(form.vars.abstract)
@@ -248,7 +247,7 @@ def edit_paper():
             # Closes the validity period of the previous instance of this paper.
             paper.update_record(end_date=now)
             # We write the paper.
-            db.paper.id = db.paper.insert(paper_id=random_paper_id,
+            db_paper_id = db.paper.insert(paper_id=random_paper_id,
                                           title=form.vars.title,
                                           authors=form.vars.authors,
                                           abstract=abstract_id,
@@ -260,43 +259,13 @@ def edit_paper():
 
         # Then, we take care of the topics.
         new_topics = set({form.vars.primary_topic}) | set(form.vars.secondary_topic_ids)
-        # ---qui---
         logger.info("new topics: %r" % new_topics)
-
-
-        # First, we close the topics to which the paper no longer belongs.
-        previous_occurrences = db((db.paper_in_topic.paper_id == random_paper_id) &
-                                  (db.paper_in_topic.end_date == None)).select()
-        for t in previous_occurrences:
-            if t.topic not in new_topics:
-                logger.info("Removing paper from topic %r" % t.topic)
-                t.update_record(end_date=now)
-        # Second, for each new topic, searches.  If the paper has never been in that topic before,
-        # it adds the paper to that topic.  Otherwise, it re-opens the previous tenure of the paper
-        # in that topic.
-        for tid in new_topics:
-            last_occurrence = db((db.paper_in_topic.paper_id == random_paper_id) &
-                                 (db.paper_in_topic.topic == tid)).select(orderby=~db.paper_in_topic.start_date).first()
-            if last_occurrence is None:
-                # We need to insert.
-                logger.info("Adding paper to new topic %r" % tid)
-                db.paper_in_topic.insert(paper_id=random_paper_id,
-                                         topic=tid,
-                                         is_primary = tid == form.vars.primary_topic,
-                                         start_date=now)
-            elif last_occurrence.end_date is not None:
-                # There was a previous occurrence, but it has now been closed.
-                # We reopen it.
-                logger.info("Reopening paper presence in topic %r" % tid)
-                db.paper_in_topic.insert(paper_id=random_paper_id,
-                                         topic=tid,
-                                         is_primary = tid == form.vars.primary_topic,
-                                         start_date=now,
-                                         num_reviews=last_occurrence.num_reviews,
-                                         score=last_occurrence.score,
-                                         )
-        # The paper has been updated.
-        # If we were looking at a specific topic, goes back to it.
+        for top in new_topics:
+            db.paper_in_topic.insert(
+                paper = db_paper_id,
+                topic = top,
+                is_primary = (top == form.vars.primary_topic),
+            )
         if request.vars.topic is not None:
             redirect(URL('default', 'topic_index', args=[request.vars.topic]))
         else:

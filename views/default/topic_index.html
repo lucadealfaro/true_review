@@ -12,10 +12,10 @@
         <div id="papers-div" v-if="show_papers">
             <h2>Papers</h2>
             <div class="button_bar">
-                <button class="btn btn-success btn-sm" v-on:click="set_primary(true)" v-bind:class="{'disabled': primary_papers}">{{=icon_primary_paper}}Primary topic papers</button>
-                <button class="btn btn-success btn-sm" v-on:click="set_primary(false)" v-bind:class="{'disabled': !primary_papers}">{{=icon_all_paper}}All topic papers</button>
-                <button class="btn btn-info btn-sm" v-on:click="set_scores(true)" v-bind:class="{'disabled': show_paper_scores}">{{=icon_view}}View ratings</button>
-                <button class="btn btn-info btn-sm" v-on:click="set_scores(false)" v-bind:class="{'disabled': !show_paper_scores}">{{=icon_hide}}Hide ratings</button>
+                <button class="btn btn-success btn-sm" v-if="!primary_papers" v-on:click="set_primary(true)" v-bind:class="{'disabled': primary_papers}">{{=icon_primary_paper}}Primary topic papers</button>
+                <button class="btn btn-success btn-sm" v-if="primary_papers" v-on:click="set_primary(false)" v-bind:class="{'disabled': !primary_papers}">{{=icon_all_paper}}All topic papers</button>
+                <button class="btn btn-info btn-sm" v-if="!show_paper_scores" v-on:click="set_scores(true)" v-bind:class="{'disabled': show_paper_scores}">{{=icon_view}}View ratings</button>
+                <button class="btn btn-info btn-sm" v-if="show_paper_scores" v-on:click="set_scores(false)" v-bind:class="{'disabled': !show_paper_scores}">{{=icon_hide}}Hide ratings</button>
                 <!-- <button class="btn btn-primary btn-sm" v-bind:class="{'disabled': !can_review}">{{=icon_pick_review}}Choose paper to review</button> -->
                 <a class="btn btn-warning btn-sm" v-bind:class="{'disabled': !can_add_paper}" href="{{=URL('default', 'edit_paper', vars=dict(topic=topic.id))}}">{{=icon_add}}Add paper</a>
             </div>
