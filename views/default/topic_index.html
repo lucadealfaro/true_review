@@ -17,7 +17,7 @@
                 <button class="btn btn-info btn-sm" v-if="!show_paper_scores" v-on:click="set_scores(true)" v-bind:class="{'disabled': show_paper_scores}">{{=icon_view}}View ratings</button>
                 <button class="btn btn-info btn-sm" v-if="show_paper_scores" v-on:click="set_scores(false)" v-bind:class="{'disabled': !show_paper_scores}">{{=icon_hide}}Hide ratings</button>
                 <!-- <button class="btn btn-primary btn-sm" v-bind:class="{'disabled': !can_review}">{{=icon_pick_review}}Choose paper to review</button> -->
-                <a class="btn btn-warning btn-sm" v-bind:class="{'disabled': !can_add_paper}" href="{{=URL('default', 'edit_paper', vars=dict(topic=topic.id))}}">{{=icon_add}}Add paper</a>
+                <a class="btn btn-warning btn-sm" v-bind:class="{'disabled': !can_add_paper}" href="{{=URL('default', 'edit_paper', args=[topic.id])}}">{{=icon_add}}Add paper</a>
             </div>
             <div class="result_table">
                 <table>

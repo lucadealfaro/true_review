@@ -67,7 +67,13 @@ def can_delete_topic(topic_id):
 
 def can_add_paper(topic_id):
     """Only administrators for that topic can add items to it."""
-    return is_topic_admin(topic_id) or is_site_admin()
+    if is_topic_admin(topic_id) or is_site_admin():
+        return True
+    if not auth.user_id:
+        # Non logged-in users cannot add papers.
+        return False
+    t = db.topic(topic_id)
+    return t is not None and t.topic_kind == 'open'
 
 def can_edit_paper(topic_id):
     return is_topic_admin(topic_id) or is_site_admin()
@@ -75,6 +81,7 @@ def can_edit_paper(topic_id):
 def can_review(topic_id):
     """Only approved reviewers for that topic can add items to it."""
     return is_topic_reviewer(topic_id) or is_site_admin()
+
 
 ## Helpers
 

@@ -39,6 +39,11 @@ def format_name(u):
 
 db.auth_user.format = '%(email)s'
 
+TOPIC_TYPES = {
+    'arXiv': 'arXiv topic (submission via arXiv)',
+    'open': 'Open: anyone can submit',
+    'managed': 'Managed: only topic admins can create papers',
+}
 
 db.define_table('topic',
                 Field('name'),
@@ -46,6 +51,7 @@ db.define_table('topic',
                 Field('description', 'text'), # Pointer to text table.
                 Field('created_by', default=get_user_email()),
                 Field('is_active', 'boolean', default=True), # Used to hide.
+                Field('topic_kind'),
                 format = '%(name)s'
                 )
 represent_paper_topic = lambda v, r: A(v, _href=URL('default', 'topic_index', args=[r.id]))
@@ -55,7 +61,7 @@ db.topic.creation_date.readable = db.topic.creation_date.writable = False
 db.topic.description.represent = represent_text_field
 db.topic.created_by.readable = db.topic.created_by.writable = None
 db.topic.is_active.readable = db.topic.is_active.writable = False
-
+db.topic.topic_kind.requires = IS_IN_SET(TOPIC_TYPES, zero='open')
 
 # A paper, which may belong to several topics, and can also be updated in time by its authors.
 db.define_table('paper',
@@ -109,6 +115,14 @@ db.define_table('role',
                 Field('is_reviewer', 'boolean'),
                 Field('is_author', 'boolean'),
                 Field('is_admin', 'boolean'),
+                )
+
+# Same, but for a paper.
+db.define_table('paper_role',
+                Field('user_email', default=get_user_email()),
+                Field('paper_id'),
+                Field('can_edit'), # One of your papers.
+                Field('can_view'), # One of your papers, just you can't edit it.
                 )
 
 db.define_table('review_application',

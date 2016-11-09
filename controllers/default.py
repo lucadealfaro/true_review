@@ -172,25 +172,28 @@ def edit_paper():
     a series of topics.
     In reality we need a more sophisticated method for adding or editing
     papers, and for importing from ArXiV.
-    If args(0) is specified, it is the id of the paper to edit.
+    args(0) is the topic; one submits papers to specific topics for rating.
+    If args(1) is specified, it is the id of the paper to edit.
     If the variable 'topic' is specified, it is taken to be the topic id
     of a paper to which the paper belongs by default.
 
     Note that I am assuming here that anyone can edit a paper.
     """
-    paper_id = request.args(0)
+    topic_id = int(request.args(0))
+    paper_id = request.args(1)
     user_id = auth.user
     paper = db(db.paper.paper_id == paper_id).select(orderby=~db.paper.start_date).first()
     is_create = paper is None
-    # If there is no topic,
-    # Creates the form.
-    default_topic_id = paper.primary_topic if paper else request.vars.topic
-    if is_site_admin():
-        legal_topics = db().select(db.topic.ALL)
+    # Checks permissions.
+    if is_create:
+        # Can the user submit?
+        if not can_add_paper(topic_id):
+            session.message = T('You cannot submit papers to this topic.')
+            redirect(URL('default', 'view_topic', args=[topic_id]))
     else:
-        legal_topics = db((db.reviewer.user == user_id) &
-                          (db.reviewer.topic == db.topic.id)).select()
-    logger.info("Legal topics: %r" % legal_topics)
+        # Can the user edit the paper?
+        # ---qui---
+
     form = SQLFORM.factory(
         Field('title', default=None if is_create else paper.title),
         Field('authors', 'list:string', default=None if is_create else paper.authors),
@@ -237,6 +240,11 @@ def edit_paper():
                                           start_date=datetime.utcnow(),
                                           end_date=None
                                           )
+            # Adds a permission line.
+            db.paper_role.insert(paper_id=random_paper_id,
+                                 can_edit=True,
+                                 can_view=True,
+                                 )
             session.flash = T('The paper has been added')
         else:
             random_paper_id = paper.paper_id
